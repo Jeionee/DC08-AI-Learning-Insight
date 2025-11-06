@@ -1,7 +1,7 @@
 import React from 'react';
 import StatsCard from './StatsCard';
 import Charts from './Charts';
-import Recommendations from './Recommendations';
+import Recommendations from './Recommendation';
 import ModuleProgress from './ModuleProgress';
 
 const Dashboard = ({ data }) => {
