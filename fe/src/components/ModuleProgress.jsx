@@ -39,7 +39,7 @@ const ModuleProgress = ({ modules }) => {
       </div>
 
       <div className="space-y-4">
-        {modules.map((module) => (
+        {modules.map((module, index) => (
           <div 
             key={module.id} 
             className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow"
@@ -62,13 +62,25 @@ const ModuleProgress = ({ modules }) => {
               </div>
             </div>
 
+            {/* PROGRESS BAR */}
             <div className="w-full bg-gray-100 rounded-full h-3 mb-6">
-              <div 
-                className={`${getStatusColor(module.progress)} h-3 rounded-full transition-all duration-500`}
-                style={{ width: `${module.progress}%` }}
+              <div
+                className="h-3 rounded-full transition-all duration-500 relative"
+                style={{
+                  width: `${module.progress}%`,
+                  background: 
+                    index === 0 || index === 1
+                      ? "linear-gradient(to right, #4cc9f0, #3a0ca3)"
+                      : undefined
+                }}
               >
+                {/* Jika bukan card 1 & 2, gunakan warna default */}
+                {index !== 0 && index !== 1 && (
+                  <div className={`${getStatusColor(module.progress)} absolute inset-0 rounded-full`} />
+                )}
+
                 {module.progress >= 30 && (
-                  <div className="h-full flex items-center justify-center">
+                  <div className="h-full flex items-center justify-center relative">
                     <span className="text-white text-xs font-medium">{module.progress}%</span>
                   </div>
                 )}
@@ -120,6 +132,7 @@ const ModuleProgress = ({ modules }) => {
                 </div>
               ))}
             </div>
+
           </div>
         ))}
       </div>

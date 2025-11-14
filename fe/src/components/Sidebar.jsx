@@ -1,6 +1,7 @@
 import React from "react";
 import { IoHomeOutline } from "react-icons/io5";
-import { GiProgression, GiRibbonMedal } from "react-icons/gi";
+import { GiProgression } from "react-icons/gi";
+import { PiListChecksBold } from "react-icons/pi";
 import { FaTrophy } from "react-icons/fa";
 
 const Sidebar = () => {
@@ -44,7 +45,7 @@ const Sidebar = () => {
               className="flex items-center p-3 rounded-lg hover:bg-[#3B4A5A] transition-all duration-300"
             >
               <span className="mr-3 text-white/80">
-                <GiRibbonMedal size={26} />
+                <PiListChecksBold size={26} />
               </span>
               <span className="font-medium">Recommendation</span>
             </a>

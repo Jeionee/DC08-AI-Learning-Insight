@@ -31,8 +31,15 @@ const Recommendations = ({ recommendations }) => {
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
                     <div 
-                      className="bg-blue-500 h-2 rounded-full transition-all duration-500"
-                      style={{ width: `${course.progress}%` }}
+                      className="h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${course.progress} %`,
+                      background: course.progress >= 70
+                       ? "linear-gradient(to right, #4cc9f0, #4361ee, #3a0ca3)" // cocok dengan slate
+          : course.progress >= 50
+          ? "linear-gradient(to right, #fbbf24, #f59e0b)" // amber halus, tetap elegan
+          : "linear-gradient(to right, #f87171, #b91c1c)" // merah gelap modern
+
+                     }}
                     ></div>
                   </div>
                   <button className="mt-auto w-full bg-slate-700 hover:bg-slate-500 text-white py-2 px-4 rounded-lg font-semibold transition-colors">
