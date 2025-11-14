@@ -7,7 +7,7 @@ const Sidebar = () => {
   return (
     <div className="fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-[#2C3E50] to-[#34495E] text-white shadow-lg">
       {/* Header */}
-      <div className="p-6 border-b border-[#3b4b5c]">
+      <div className="p-6 border-b border-[#e0e4e9]">
         <h1 className="text-2xl font-bold tracking-wide">LeanSmart</h1>
       </div>
 

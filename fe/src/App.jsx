@@ -41,7 +41,7 @@ const App = () => {
 					title: "Advanced CSS Techniques",
 					description: "Elevate your styling skills with advanced CSS concepts.",
 					progress: 30,
-					icon: "CSS",
+					icon: "HTML",
 					category: "Design",
 				},
 				{
@@ -49,7 +49,7 @@ const App = () => {
 					title: "React State Management",
 					description: "Master complex application states in React.",
 					progress: 65,
-					icon: "JS",
+					icon: "CSS",
 					category: "Development",
 				},
 				{
@@ -57,7 +57,7 @@ const App = () => {
 					title: "Web Accessibility Basics",
 					description: "Build inclusive web experiences for all users.",
 					progress: 0,
-					icon: "A11Y",
+					icon: "JS",
 					category: "Best Practices",
 				},
 			],
