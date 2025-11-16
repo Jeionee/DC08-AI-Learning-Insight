@@ -2,7 +2,7 @@ const routes = (handler) => [
 	{
 		method: "GET",
 		path: "/moduls",
-		handler: function () {},
+		handler: handler.getModulsHandler,
 	},
 ];
 
