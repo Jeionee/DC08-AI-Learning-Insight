@@ -1,7 +1,12 @@
 const Hapi = require("@hapi/hapi");
 const moduls = require("./api/moduls");
+const ModulsService = require("./services/ModulsService");
+const StudentsService = require("./services/")
 
 const init = async () => {
+	const modulsService = new ModulsService();
+	const studentsService = new StudentsService();
+
 	const server = Hapi.server({
 		port: 5000,
 		host: "localhost",
@@ -10,7 +15,13 @@ const init = async () => {
 	server.register({
 		plugin: moduls,
 		options: {
-			service: ModulsService,
+			service: modulsService,
+		},
+	});
+	server.register({
+		plugin: students,
+		options: {
+			service: studentsService,
 		},
 	});
 
