@@ -5,16 +5,15 @@ class StudentsHandler {
 		this.getStudentByIdHandler = this.getStudentByIdHandler.bind(this);
 	}
 
-	async getStudentByIdHandler(request) {
+	async getStudentByIdHandler(request, h) {
 		const { id } = request.params;
-		const student = this._service.getStudentById(id);
-
-		return {
+		const student = await this._service.getStudentById(id);
+		const response = h.response({
 			status: "success",
-			data: {
-				student,
-			},
-		};
+			data: student,
+		});
+		response.code(200);
+		return response;
 	}
 }
 
