@@ -1,24 +1,35 @@
+require("dotenv").config();
 const Hapi = require("@hapi/hapi");
+
+/* plugin */
 const moduls = require("./api/moduls");
+const students = require("./api/students");
+
+/* services */
 const ModulsService = require("./services/ModulsService");
-const StudentsService = require("./services/")
+const StudentsService = require("./services/StudentsService");
 
 const init = async () => {
 	const modulsService = new ModulsService();
 	const studentsService = new StudentsService();
 
 	const server = Hapi.server({
-		port: 5000,
-		host: "localhost",
+		port: process.env.PORT,
+		host: process.env.HOST,
+		routes: {
+			cors: {
+				origin: ["*"],
+			},
+		},
 	});
 
-	server.register({
+	await server.register({
 		plugin: moduls,
 		options: {
 			service: modulsService,
 		},
 	});
-	server.register({
+	await server.register({
 		plugin: students,
 		options: {
 			service: studentsService,

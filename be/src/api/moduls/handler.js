@@ -2,7 +2,7 @@ class ModulsHandler {
 	constructor(service) {
 		this._service = service;
 
-		this.getModulsHandler = this.getModulsHandler.bind(this);
+		this.getModulByIdHandler = this.getModulByIdHandler.bind(this);
 	}
 	async getModulByIdHandler(request) {
 		const { id } = request.params;

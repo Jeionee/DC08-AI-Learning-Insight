@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "./components/Sidebar.jsx";
 import Dashboard from "./components/Dashboard.jsx";
+import axios from "axios";
 
 const App = () => {
 	const [learningData, setLearningData] = useState(null);
@@ -94,6 +95,13 @@ const App = () => {
 				},
 			],
 		};
+
+		const getData = async () => {
+			const res = await axios.get("http://localhost:5000/students/2401");
+			console.log(res.data);
+		};
+
+		getData();
 
 		setLearningData(mockData);
 	}, []);

@@ -1,8 +1,8 @@
 const routes = (handler) => [
 	{
 		method: "GET",
-		path: "/moduls",
-		handler: handler.getModulsHandler,
+		path: "/moduls/{id}",
+		handler: handler.getModulByIdHandler,
 	},
 ];
 
