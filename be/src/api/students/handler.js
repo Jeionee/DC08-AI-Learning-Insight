@@ -5,7 +5,17 @@ class StudentsHandler {
 		this.getStudentByIdHandler = this.getStudentByIdHandler.bind(this);
 	}
 
-	async getStudentByIdHandler() {}
+	async getStudentByIdHandler(request) {
+		const { id } = request.params;
+		const student = this._service.getStudentById(id);
+
+		return {
+			status: "success",
+			data: {
+				student,
+			},
+		};
+	}
 }
 
 module.exports = StudentsHandler;

@@ -6,11 +6,11 @@ class ModulsHandler {
 	}
 	async getModulByIdHandler(request) {
 		const { id } = request.params;
-		const moduls = await this._service.getModulById(id);
+		const modul = await this._service.getModulById(id);
 
 		return {
 			status: "success",
-			data: {},
+			data: { modul },
 		};
 	}
 }
