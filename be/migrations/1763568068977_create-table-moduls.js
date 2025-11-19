@@ -18,7 +18,7 @@ exports.up = (pgm) => {
 			notNull: true,
 		},
 		difficulty: {
-			type: "TEXT",
+			type: "INTEGER",
 			notNull: true,
 		},
 	});

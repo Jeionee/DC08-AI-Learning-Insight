@@ -1,4 +1,3 @@
-const { nanoid } = require("nanoid");
 const { Pool } = require("pg");
 
 class ModulsService {
