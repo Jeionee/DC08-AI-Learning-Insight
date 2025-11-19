@@ -17,9 +17,9 @@ exports.up = (pgm) => {
 			type: "TEXT",
 			notNull: true,
 		},
-		learning_style: {
+		image_path: {
 			type: "TEXT",
-			notNull: true,
+			notNull: false,
 		},
 	});
 };
@@ -30,5 +30,5 @@ exports.up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 exports.down = (pgm) => {
-	pgm.deleteTable("students");
+	pgm.dropTable("students");
 };
