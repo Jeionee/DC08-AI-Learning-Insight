@@ -16,7 +16,7 @@ const Dashboard = ({ data }) => {
 	useEffect(() => {
 		const getData = async () => {
 			const res = await axios.get("http://localhost:5000/students/2402");
-			setStudent(res.data.data);
+			setStudent(res.data);
 		};
 
 		getData();
