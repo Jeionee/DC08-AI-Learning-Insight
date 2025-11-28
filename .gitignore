@@ -2,3 +2,4 @@ fe/node_modules/
 be/node_modules/
 be/.env
 fe/.env
+.idea
