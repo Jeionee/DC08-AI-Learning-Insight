@@ -17,12 +17,12 @@ const Dashboard = ({ data }) => {
 
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get("http://localhost:5000/students/2402");
+      const res = await axios.get("http://localhost:5000/students/2401");
       setStudent(res.data.data);
     };
 
     const getModuls = async () => {
-      const res = await axios.get("http://localhost:5000/moduls/md01");
+      const res = await axios.get("http://localhost:5000/moduls/mod01");
       setModuls(res.data.data);
     };
 
