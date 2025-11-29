@@ -15,8 +15,8 @@ const Dashboard = ({ data }) => {
 
 	useEffect(() => {
 		const getData = async () => {
-			const res = await axios.get("http://localhost:5000/students/2402");
-			setStudent(res.data);
+			const res = await axios.get("http://localhost:5000/students/2401");
+			setStudent(res.data.data);
 		};
 
 		getData();
@@ -92,7 +92,7 @@ const Dashboard = ({ data }) => {
 							<span
 								key={key}
 								className={`px-3 py-1 rounded-full text-xs font-medium border ${
-									key === student.learning_style
+									key === student.image_path
 										? style.color
 										: "bg-gray-100 text-gray-600 border-gray-200"
 								}`}
