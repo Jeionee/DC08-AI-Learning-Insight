@@ -1,28 +1,11 @@
 import React, { useEffect, useState } from "react";
-import StatsCard from "../components/StatsCard";
-import Charts from "../components/Charts";
-import Recommendations from "../components/Recommendation";
-import ModuleProgress from "../components/ModuleProgress";
 /* components */
+import { Charts } from "../components/common/Charts";
+
+/* library */
 import axios from "axios";
 
-const Dashboard = ({ data }) => {
-	const [student, setStudent] = useState();
-	const formatTime = (minutes) => {
-		const hours = Math.floor(minutes / 60);
-		const mins = minutes % 60;
-		return `${hours}h ${mins}m`;
-	};
-
-	useEffect(() => {
-		const getData = async () => {
-			const res = await axios.get("http://localhost:5000/students/2402");
-			setStudent(res.data);
-		};
-
-		getData();
-	}, []);
-
+const DashboardPage = () => {
 	const learningStyles = {
 		consistent: {
 			name: "Consistent Learner",
@@ -46,8 +29,9 @@ const Dashboard = ({ data }) => {
 
 	return (
 		<div className="">
+			<Charts />
 		</div>
 	);
 };
 
-export default Dashboard;
+export default DashboardPage;
