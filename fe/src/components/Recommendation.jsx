@@ -21,7 +21,7 @@ const Recommendations = ({ recommendations }) => {
             className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col"
           >
             <div className="h-24 bg-slate-700 flex items-center justify-center text-white font-bold text-lg">
-              {course.icon}
+              <span className="text-sm opacity-70">{course.category}</span>
             </div>
             <div className="p-6 flex flex-col h-full">
               <div className="flex justify-between items-start mb-2">

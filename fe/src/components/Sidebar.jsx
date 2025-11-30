@@ -1,71 +1,66 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 import { GiProgression } from "react-icons/gi";
 import { PiListChecksBold } from "react-icons/pi";
 import { FaTrophy } from "react-icons/fa";
 
-const Sidebar = () => {
+export default function Sidebar({ open }) {
   return (
-    <div className="fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-[#2C3E50] to-[#34495E] text-white shadow-lg">
-      {/* Header */}
-      <div className="p-6 border-b border-[#e0e4e9]">
-        <h1 className="text-2xl font-bold tracking-wide">LeanSmart</h1>
-      </div>
-
-      {/* Navigation */}
-      <nav className="p-4">
+    <div
+      className={`
+        fixed top-16 left-0 
+        h-[calc(100vh-4rem)]
+        bg-gradient-to-b from-[#2C3E50] to-[#34495E]
+        text-white shadow-lg
+        transition-all duration-300
+        ${open ? "w-64" : "w-0"}
+        overflow-hidden
+        z-30
+      `}
+    >
+      <nav className="p-4 mt-2">
         <ul className="space-y-2">
           <li>
-            <a
-              href="#"
-              className="flex items-center p-3 rounded-lg bg-[#3B4A5A] hover:bg-[#1F2A38] transition-all duration-300 shadow-sm"
+            <Link
+              to="/dashboard"
+              className="flex items-center p-3 rounded-lg hover:bg-[#1F2A38] transition"
             >
-              <span className="mr-3 text-white/90">
-                <IoHomeOutline size={26} />
-              </span>
-              <span className="font-medium">Home</span>
-            </a>
+              <IoHomeOutline size={22} className="mr-3" />
+              Dashboard
+            </Link>
           </li>
 
           <li>
-            <a
-              href="#"
-              className="flex items-center p-3 rounded-lg hover:bg-[#3B4A5A] transition-all duration-300"
+            <Link
+              to="/progress"
+              className="flex items-center p-3 rounded-lg hover:bg-[#1F2A38] transition"
             >
-              <span className="mr-3 text-white/80">
-                <GiProgression size={26} />
-              </span>
-              <span className="font-medium">Progress</span>
-            </a>
+              <GiProgression size={22} className="mr-3" />
+              Progress
+            </Link>
           </li>
 
           <li>
-            <a
-              href="#"
-              className="flex items-center p-3 rounded-lg hover:bg-[#3B4A5A] transition-all duration-300"
+            <Link
+              to="/recommendation"
+              className="flex items-center p-3 rounded-lg hover:bg-[#1F2A38] transition"
             >
-              <span className="mr-3 text-white/80">
-                <PiListChecksBold size={26} />
-              </span>
-              <span className="font-medium">Recommendation</span>
-            </a>
+              <PiListChecksBold size={22} className="mr-3" />
+              Recommendation
+            </Link>
           </li>
 
           <li>
-            <a
-              href="#"
-              className="flex items-center p-3 rounded-lg hover:bg-[#3B4A5A] transition-all duration-300"
+            <Link
+              to="/challenges"
+              className="flex items-center p-3 rounded-lg hover:bg-[#1F2A38] transition"
             >
-              <span className="mr-3 text-white/80">
-                <FaTrophy size={26} />
-              </span>
-              <span className="font-medium">Challenges</span>
-            </a>
+              <FaTrophy size={20} className="mr-3" />
+              Challenges
+            </Link>
           </li>
         </ul>
       </nav>
     </div>
   );
-};
-
-export default Sidebar;
+}
