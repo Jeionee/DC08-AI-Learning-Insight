@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
 
-export default function DashboardLayout({ student }) {
+export default function StudentsLayout({ student }) {
   const [openSidebar, setOpenSidebar] = useState(true);
 
   return (

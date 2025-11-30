@@ -3,9 +3,9 @@ import React, {useState, useEffect} from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 /*layouts*/
-import DashboardLayout from "./layout/DashboardLayout";
-import Dashboard from "./components/Dashboard";
+import StudentsLayout from "./layout/StudentsLayout.jsx";
 import Profile from "./pages/Profile";
+
 /*pages*/
 import DashboardPage from "./pages/DashboardPage";
 
@@ -113,7 +113,7 @@ const App = () => {
             <Routes>
                 <Route
                     path="/"
-                    element={<DashboardLayout student={learningData.user}/>}
+                    element={<StudentsLayout student={learningData.user}/>}
                 >
                     <Route index element={<DashboardPage data={learningData}/>}/>
                     <Route path="dashboard" element={<DashboardPage data={learningData}/>}/>
