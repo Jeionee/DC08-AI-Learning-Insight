@@ -40,8 +40,8 @@ const ModuleProgress = ({ modules }) => {
 
       <div className="space-y-4">
         {modules.map((module, index) => (
-          <div 
-            key={module.id} 
+          <div
+            key={module.id}
             className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow"
           >
             <div className="flex justify-between items-start mb-4">
@@ -68,7 +68,7 @@ const ModuleProgress = ({ modules }) => {
                 className="h-3 rounded-full transition-all duration-500 relative"
                 style={{
                   width: `${module.progress}%`,
-                  background: 
+                  background:
                     index === 0 || index === 1
                       ? "linear-gradient(to right, #4cc9f0, #3a0ca3)"
                       : undefined
@@ -89,8 +89,8 @@ const ModuleProgress = ({ modules }) => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {module.assessments.map((assessment, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className={`p-4 rounded-lg border ${
                     assessment.score === null 
                       ? 'border-gray-200 bg-gray-50' 
@@ -100,7 +100,7 @@ const ModuleProgress = ({ modules }) => {
                           ? 'border-amber-200 bg-amber-50' 
                           : 'border-red-200 bg-red-50'
                   }`}
-                >
+                >w
                   <div className="flex justify-between items-start">
                     <div>
                       <span className="text-gray-900 font-medium">{assessment.name}</span>
