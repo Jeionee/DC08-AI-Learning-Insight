@@ -48,13 +48,6 @@ const DashboardPage = ({data}) => {
             {/* Header */}
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                <div className="flex items-center space-x-3">
-                    <div
-                        className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
-                        {data.user.avatar}
-                    </div>
-                    <span className="text-gray-700 font-medium">{student.name}</span>
-                </div>
             </div>
 
             {/* Stats Grid */}
