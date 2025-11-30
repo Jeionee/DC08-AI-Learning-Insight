@@ -46,7 +46,7 @@ const Dashboard = ({ data }) => {
   };
 
   return (
-    <div className="flex-1 pr-8 py-8 pl-0 border-2 border-red-500">
+    <div className="flex-1 py-8 pl-0 border-2 border-red-500">
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <StatsCard
