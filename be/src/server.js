@@ -23,18 +23,20 @@ const init = async () => {
 		},
 	});
 
-	await server.register({
-		plugin: moduls,
-		options: {
-			service: modulsService,
+	await server.register([
+		{
+			plugin: moduls,
+			options: {
+				service: modulsService,
+			},
 		},
-	});
-	await server.register({
-		plugin: students,
-		options: {
-			service: studentsService,
+		{
+			plugin: students,
+			options: {
+				service: studentsService,
+			},
 		},
-	});
+	]);
 
 	await server.start();
 	console.log(`Server is running on ${server.info.uri}`);
