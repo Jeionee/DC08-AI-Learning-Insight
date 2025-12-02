@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
 
-export default function DashboardLayout({ student }) {
+export default function DashboardLayout({ student, onLogout }) {
   const [openSidebar, setOpenSidebar] = useState(true);
 
   return (
@@ -13,19 +13,16 @@ export default function DashboardLayout({ student }) {
       <Navbar
         toggleSidebar={() => setOpenSidebar(!openSidebar)}
         student={student}
+        onLogout={onLogout}
       />
 
-      {/* WRAPPER */}
+      {/* CONTENT WRAPPER */}
       <div className="flex flex-1 pt-16">
-
-        {/* SIDEBAR */}
         <Sidebar open={openSidebar} />
-
-        {/* MAIN CONTENT */}
         <main
-          className={`flex-1 p-8 bg-gray-50 transition-all duration-300
-            ${openSidebar ? "ml-64" : "ml-0"}
-          `}
+          className={`flex-1 p-8 bg-gray-50 transition-all duration-300 ${
+            openSidebar ? "ml-64" : "ml-0"
+          }`}
         >
           <Outlet />
         </main>
