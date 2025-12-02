@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 /*layouts*/
-import StudentsLayout from "./layout/StudentsLayout.jsx";
+import StudentsLayout from "./layouts/StudentsLayout.jsx";
 import Profile from "./pages/Profile";
 
 /*pages*/
