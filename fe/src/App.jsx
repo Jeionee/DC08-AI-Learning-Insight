@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import DashboardLayout from "./layout/DashboardLayout";
 import Dashboard from "./components/Dashboard";
 import Profile from "./pages/Profile";
+import Login from "./pages/LoginPage";
 
 const App = () => {
   const [learningData, setLearningData] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // Simulasi data (mock)
   useEffect(() => {
     const mockData = {
       user: {
@@ -107,17 +110,38 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+
+        {/* LOGIN */}
+        <Route
+          path="/login"
+          element={
+            isLoggedIn ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              <Login onLogin={() => setIsLoggedIn(true)} />
+            )
+          }
+        />
+
+        {/* PROTECTED ROUTES */}
         <Route
           path="/"
-          element={<DashboardLayout student={learningData.user} />}
+          element={
+            isLoggedIn ? (
+              <DashboardLayout
+                student={learningData.user}
+                onLogout={() => setIsLoggedIn(false)}
+              />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
         >
-          <Route index element={<Dashboard data={learningData} />} />
+          <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard data={learningData} />} />
-          <Route
-            path="profile"
-            element={<Profile user={learningData.user} />}
-          />
+          <Route path="profile" element={<Profile user={learningData.user} />} />
         </Route>
+
       </Routes>
     </BrowserRouter>
   );
