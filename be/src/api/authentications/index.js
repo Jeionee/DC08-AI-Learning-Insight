@@ -1,5 +1,5 @@
 const routes = require("../moduls/routes");
-const authenticationsHandler = require("./handler");
+const AuthenticationsHandler = require("./handler");
 
 module.export = {
 	name: "authentications",
