@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { loginRequest } from "../api/authApi";
 
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -7,7 +8,7 @@ export default function Login({ onLogin }) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
@@ -15,13 +16,23 @@ export default function Login({ onLogin }) {
       return;
     }
 
-    onLogin();
+    try {
+      //panggil API login dari file lain
+      const data = await loginRequest(email, password);
+
+      // ambil token dan user
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      onLogin();
+    } catch (err) {
+      setError("Email atau password salah");
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white p-6">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-slate-200">
-        
         <h1 className="text-3xl font-bold text-slate-800 text-center mb-3">
           LearnSmart
         </h1>
@@ -35,7 +46,6 @@ export default function Login({ onLogin }) {
         )}
 
         <form onSubmit={handleLogin} className="space-y-6">
-          
           {/* Email */}
           <div>
             <label className="block text-slate-700 mb-1 font-medium">
@@ -90,7 +100,6 @@ export default function Login({ onLogin }) {
           >
             Login
           </button>
-
         </form>
 
         <p className="text-center text-slate-600 text-sm mt-6">
@@ -99,7 +108,6 @@ export default function Login({ onLogin }) {
             Register
           </span>
         </p>
-
       </div>
     </div>
   );
