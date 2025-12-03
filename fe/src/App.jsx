@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
+import ForgotPasswordPage from "./pages/ForgotPasswordPage"; // Import halaman Forgot Password
 import DashboardLayout from "./layout/DashboardLayout";
 import Dashboard from "./components/Dashboard";
 import Profile from "./pages/Profile";
-import Login from "./pages/LoginPage";
+import LoginPage from "./pages/LoginPage";
 
 const App = () => {
   const [learningData, setLearningData] = useState(null);
@@ -108,7 +109,7 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
 
         {/* LOGIN */}
@@ -118,10 +119,13 @@ const App = () => {
             isLoggedIn ? (
               <Navigate to="/dashboard" replace />
             ) : (
-              <Login onLogin={() => setIsLoggedIn(true)} />
+              <LoginPage onLogin={() => setIsLoggedIn(true)} />
             )
           }
         />
+
+        {/* FORGOT PASSWORD */}
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
         {/* PROTECTED ROUTES */}
         <Route
@@ -143,7 +147,7 @@ const App = () => {
         </Route>
 
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 };
 

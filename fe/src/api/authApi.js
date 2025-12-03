@@ -10,3 +10,11 @@ export async function loginRequest(email, password) {
 
   return response.data; // token & user
 }
+
+export async function forgotPasswordRequest(email) {
+  const response = await axios.post(`${API_URL}/api/auth/forgot-password`, {
+    email,
+  });
+
+  return response.data; // confirmation message
+}

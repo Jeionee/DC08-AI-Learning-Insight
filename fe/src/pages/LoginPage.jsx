@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { loginRequest } from "../api/authApi";
+import { Link } from "react-router-dom"; // Import Link untuk menambahkan tautan
 
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -17,10 +18,10 @@ export default function Login({ onLogin }) {
     }
 
     try {
-      //panggil API login dari file lain
+      // Panggil API login dari file lain
       const data = await loginRequest(email, password);
 
-      // ambil token dan user
+      // Ambil token dan user
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
@@ -87,9 +88,12 @@ export default function Login({ onLogin }) {
 
             {/* Forgot Password */}
             <p className="text-right mt-2">
-              <span className="text-slate-700 text-sm hover:underline cursor-pointer">
+              <Link
+                to="/forgot-password"
+                className="text-slate-700 text-sm hover:underline cursor-pointer"
+              >
                 Forgot Password?
-              </span>
+              </Link>
             </p>
           </div>
 
