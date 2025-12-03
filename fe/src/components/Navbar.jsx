@@ -34,43 +34,52 @@ export default function Navbar({ toggleSidebar, student, onLogout }) {
         ☰
       </button>
 
-            {/* LOGO */}
-            <h1 className="text-2xl font-bold text-gray-800">LeanSmart</h1>
+      {/* LOGO */}
+      <h1 className="text-2xl font-bold text-gray-800">LeanSmart</h1>
 
-            {/* RIGHT PROFILE */}
-            <div className="ml-auto relative">
-                <div
-                    className="flex items-center space-x-3 cursor-pointer"
-                    onClick={() => setOpen(!open)}
-                >
-                    <div
-                        className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
-                        {student?.name?.charAt(0) || "U"}
-                    </div>
-                    <span className="text-gray-700 font-medium">
-            {student?.name || "User"}
-          </span>
-                </div>
+      {/* RIGHT PROFILE DROPDOWN */}
+      <div className="ml-auto relative" ref={dropdownRef}>
+        {/* Profile toggle */}
+        <div
+          className="flex items-center space-x-3 cursor-pointer hover:bg-gray-100 p-2 rounded-full transition duration-200"
+          onClick={() => setOpen(!open)}
+        >
+          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
+            {student?.name?.charAt(0) || "U"}
+          </div>
 
-                {/* DROPDOWN */}
-                {open && (
-                    <div className="absolute right-0 mt-3 w-40 bg-white border rounded-xl shadow-lg z-50">
-                        <a
-                            href="/profile"
-                            className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                        >
-                            Profile
-                        </a>
+          <span className="text-gray-700 font-medium">{student?.name || "User"}</span>
 
-                        <button
-                            className="block w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100"
-                            onClick={() => console.log("Logout")}
-                        >
-                            Logout
-                        </button>
-                    </div>
-                )}
-            </div>
+          {/* Chevron Icon */}
+          <FiChevronDown
+            className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          />
         </div>
-    );
+
+        {/* DROPDOWN MENU */}
+        <div
+          className={`absolute right-0 mt-3 w-52 bg-white border rounded-xl shadow-lg z-50 transition-all duration-200 origin-top-right ${
+            open ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"
+          }`}
+        >
+          {/* PROFILE */}
+          <Link
+            to="/profile"
+            className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition duration-150"
+          >
+            <CgProfile size={20} className="mr-3" /> Profile Saya
+          </Link>
+
+          {/* LOGOUT */}
+          <button
+            className="flex items-center w-full text-left px-4 py-3 text-red-500 hover:bg-gray-100 hover:text-red-600 transition duration-150 rounded-b-xl"
+            onClick={handleLogout}
+          >
+            <IoIosLogOut size={20} className="mr-3" />
+            Keluar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
