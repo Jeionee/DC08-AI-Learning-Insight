@@ -12,6 +12,7 @@ export default function Login({ onLogin }) {
 
     if (!email || !password) {
       setError("Email dan password wajib diisi");
+
       return;
     }
 
@@ -21,7 +22,7 @@ export default function Login({ onLogin }) {
   return (
     <div className="min-h-screen flex items-center justify-center bg-white p-6">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-slate-200">
-        
+
         <h1 className="text-3xl font-bold text-slate-800 text-center mb-3">
           LearnSmart
         </h1>
@@ -35,7 +36,7 @@ export default function Login({ onLogin }) {
         )}
 
         <form onSubmit={handleLogin} className="space-y-6">
-          
+
           {/* Email */}
           <div>
             <label className="block text-slate-700 mb-1 font-medium">
