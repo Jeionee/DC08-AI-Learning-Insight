@@ -31,7 +31,9 @@ export default function Login({ onLogin }) {
     }
   };
 
-  return (
+  return (<>
+  
+  </>
     <div className="min-h-screen flex items-center justify-center bg-white p-6">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-slate-200">
         <h1 className="text-3xl font-bold text-slate-800 text-center mb-3">
