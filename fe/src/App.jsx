@@ -8,7 +8,13 @@ import Login from "./pages/LoginPage";
 
 const App = () => {
   const [learningData, setLearningData] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+
+  // cek token dilocalstorage saat refresh
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token)
+  }, []);
 
   // Simulasi data (mock)
   useEffect(() => {
@@ -103,7 +109,7 @@ const App = () => {
     setLearningData(mockData);
   }, []);
 
-  if (!learningData) {
+  if (!learningData || isLoggedIn === null) {
     return <div>Loading...</div>;
   }
 
