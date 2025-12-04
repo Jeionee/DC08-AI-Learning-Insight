@@ -8,20 +8,24 @@
  * @returns {Promise<void> | void}
  */
 exports.up = (pgm) => {
-	pgm.createTable("moduls", {
-		id: {
-			type: "VARCHAR(50)",
-			primaryKey: true,
-		},
-		name: {
-			type: "TEXT",
-			notNull: true,
-		},
-		difficulty: {
-			type: "INTEGER",
-			notNull: true,
-		},
-	});
+    pgm.createTable("moduls", {
+        id: {
+            type: "VARCHAR(50)",
+            primaryKey: true,
+        },
+        name: {
+            type: "TEXT",
+            notNull: true,
+        },
+        difficulty: {
+            type: "INTEGER",
+            notNull: true,
+        },
+        hour_at_rush: {
+            type: "INTEGER",
+            notNull: true,
+        },
+    });
 };
 
 /**

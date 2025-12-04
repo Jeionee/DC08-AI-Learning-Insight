@@ -8,20 +8,21 @@
  * @returns {Promise<void> | void}
  */
 exports.up = (pgm) => {
-	pgm.createTable("students", {
-		id: {
-			type: "VARCHAR(50)",
-			primaryKey: true,
-		},
-		name: {
-			type: "TEXT",
-			notNull: true,
-		},
-		image_path: {
-			type: "TEXT",
-			notNull: false,
-		},
-	});
+    pgm.createTable("students", {
+        id: {
+            type: "VARCHAR(50)",
+            primaryKey: true,
+        },
+        name: {
+            type: "TEXT",
+            notNull: true,
+        },
+        email: {
+            type: "TEXT",
+            notNull: false,
+            unique: true
+        },
+    });
 };
 
 /**
@@ -30,5 +31,5 @@ exports.up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 exports.down = (pgm) => {
-	pgm.dropTable("students");
+    pgm.dropTable("students");
 };
