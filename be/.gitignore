@@ -1,0 +1,42 @@
+# --- Python & Virtual Environment ---
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv/
+.env
+
+# --- Flask ---
+instance/
+.webassets-cache
+.flaskenv
+
+# --- Database ---
+*.db
+*.sqlite
+*.sqlite3
+migrations/
+
+# --- Machine Learning & Datasets ---
+# Abaikan file dataset mentah (Excel/CSV) agar repo tidak berat
+*.csv
+*.xlsx
+*.json
+
+# Jupyter Notebook checkpoints (kalau ada sisa dari Colab)
+.ipynb_checkpoints
+
+# Model Files (Opsional)
+# Jika file .pkl kamu kecil (<50MB), boleh di-commit (hapus tanda pagar di bawah).
+# Jika file .pkl besar (>100MB), sebaiknya di-ignore dan jangan di-push ke GitHub.
+# *.pkl
+
+# --- IDE / Text Editor ---
+.vscode/
+.idea/
+*.swp
+
+# --- OS Junk Files ---
+.DS_Store
+Thumbs.db
