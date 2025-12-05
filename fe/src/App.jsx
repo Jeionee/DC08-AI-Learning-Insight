@@ -3,8 +3,11 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import StudentsLayout from "./layouts/StudentsLayout";
 import Dashboard from "./pages/DashboardPage";
-import Profile from "./pages/Profile";
+import ProfilePage from "./pages/ProfilePage";
 import Login from "./pages/LoginPage";
+import ProgressPage from "./pages/ProgressPage";
+import RecommendationPage from "./pages/RecommendationPage";
+import ChallengesPage from "./pages/ChallengesPage";
 
 const App = () => {
   const [learningData, setLearningData] = useState(null);
@@ -13,7 +16,7 @@ const App = () => {
   // cek token dilocalstorage saat refresh
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token)
+    setIsLoggedIn(!!token);
   }, []);
 
   // Simulasi data (mock)
@@ -50,7 +53,8 @@ const App = () => {
         {
           id: 1,
           title: "Advanced CSS Techniques",
-          description: "Elevate your styling skills with advanced CSS concepts.",
+          description:
+            "Elevate your styling skills with advanced CSS concepts.",
           progress: 30,
           icon: "HTML",
           category: "Design",
@@ -116,7 +120,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-
         {/* LOGIN */}
         <Route
           path="/login"
@@ -145,9 +148,14 @@ const App = () => {
         >
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard data={learningData} />} />
-          <Route path="profile" element={<Profile user={learningData.user} />} />
+          <Route
+            path="profile"
+            element={<ProfilePage user={learningData.user} />}
+          />
+          <Route path="progress" element={<ProgressPage />} />
+          <Route path="recommendation" element={<RecommendationPage />} />
+          <Route path="challenges" element={< ChallengesPage />} />
         </Route>
-
       </Routes>
     </BrowserRouter>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Profile({ user }) {
+export default function ProfilePage({ user }) {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     name: user.name,
@@ -113,7 +113,7 @@ export default function Profile({ user }) {
 
   // ===== MODE VIEW =====
   return (
-    <div className="p-8">
+    <div className="p-4">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Your Profile</h1>
 
       {/* PROFILE CARD */}
