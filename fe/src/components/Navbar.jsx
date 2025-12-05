@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { IoIosLogOut } from "react-icons/io";
-import { FiChevronDown } from "react-icons/fi"; // <- ikon panah
+import { FiChevronDown } from "react-icons/fi";
 
 export default function Navbar({ toggleSidebar, student, onLogout }) {
   const [open, setOpen] = useState(false);
@@ -48,18 +48,24 @@ export default function Navbar({ toggleSidebar, student, onLogout }) {
             {student?.name?.charAt(0) || "U"}
           </div>
 
-          <span className="text-gray-700 font-medium">{student?.name || "User"}</span>
+          <span className="text-gray-700 font-medium">
+            {student?.name || "User"}
+          </span>
 
           {/* Chevron Icon */}
           <FiChevronDown
-            className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+            className={`transition-transform duration-200 ${
+              open ? "rotate-180" : ""
+            }`}
           />
         </div>
 
         {/* DROPDOWN MENU */}
         <div
           className={`absolute right-0 mt-3 w-52 bg-white border rounded-xl shadow-lg z-50 transition-all duration-200 origin-top-right ${
-            open ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"
+            open
+              ? "scale-100 opacity-100"
+              : "scale-95 opacity-0 pointer-events-none"
           }`}
         >
           {/* PROFILE */}
@@ -67,7 +73,7 @@ export default function Navbar({ toggleSidebar, student, onLogout }) {
             to="/profile"
             className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition duration-150"
           >
-            <CgProfile size={20} className="mr-3" /> Profile Saya
+            <CgProfile size={20} className="mr-3" /> Your Profile
           </Link>
 
           {/* LOGOUT */}
@@ -76,7 +82,7 @@ export default function Navbar({ toggleSidebar, student, onLogout }) {
             onClick={handleLogout}
           >
             <IoIosLogOut size={20} className="mr-3" />
-            Keluar
+            Logout
           </button>
         </div>
       </div>
