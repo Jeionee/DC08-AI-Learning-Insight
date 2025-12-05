@@ -31,9 +31,8 @@ export default function Login({ onLogin }) {
     }
   };
 
-  return (<>
-  
-  </>
+  return (
+  <>
     <div className="min-h-screen flex items-center justify-center bg-white p-6">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border border-slate-200">
         <h1 className="text-3xl font-bold text-slate-800 text-center mb-3">
@@ -49,6 +48,10 @@ export default function Login({ onLogin }) {
         )}
 
         <form onSubmit={handleLogin} className="space-y-6">
+          {/* Email */}
+          <div>
+            <label className="block text-slate-700 mb-1 font-medium">
+              Email
             </label>
             <input
               type="email"
@@ -74,7 +77,6 @@ export default function Login({ onLogin }) {
                 onChange={(e) => setPassword(e.target.value)}
               />
 
-              {/* Eye Icon */}
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -84,7 +86,6 @@ export default function Login({ onLogin }) {
               </button>
             </div>
 
-            {/* Forgot Password */}
             <p className="text-right mt-2">
               <span className="text-slate-700 text-sm hover:underline cursor-pointer">
                 Forgot Password?
@@ -92,7 +93,6 @@ export default function Login({ onLogin }) {
             </p>
           </div>
 
-          {/* Button */}
           <button
             type="submit"
             className="w-full py-3 bg-slate-800 text-white font-semibold rounded-lg hover:bg-slate-900 active:scale-95 transition"
@@ -109,5 +109,6 @@ export default function Login({ onLogin }) {
         </p>
       </div>
     </div>
-  );
+  </>
+);
 }

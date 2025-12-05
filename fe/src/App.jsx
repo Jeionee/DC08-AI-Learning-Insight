@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import DashboardLayout from "./layout/DashboardLayout";
-import Dashboard from "./components/Dashboard";
+import StudentsLayout from "./layouts/StudentsLayout";
+import Dashboard from "./pages/DashboardPage";
 import Profile from "./pages/Profile";
 import Login from "./pages/LoginPage";
 
@@ -134,7 +134,7 @@ const App = () => {
           path="/"
           element={
             isLoggedIn ? (
-              <DashboardLayout
+              <StudentsLayout
                 student={learningData.user}
                 onLogout={() => setIsLoggedIn(false)}
               />
