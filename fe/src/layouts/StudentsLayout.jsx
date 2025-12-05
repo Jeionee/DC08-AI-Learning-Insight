@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import { Outlet } from "react-router-dom";
 
-export default function StudentsLayout({ student }) {
+export default function StudentsLayout({ student, onLogout }) {
   const [openSidebar, setOpenSidebar] = useState(true);
 
   return (
@@ -13,6 +13,7 @@ export default function StudentsLayout({ student }) {
       <Navbar
         toggleSidebar={() => setOpenSidebar(!openSidebar)}
         student={student}
+        onLogout={onLogout}
       />
 
       {/* WRAPPER */}
