@@ -40,19 +40,20 @@ Dokumentasi ini menyediakan informasi mengenai endpoint yang tersedia untuk meng
 ### 1. Get Student Profile
 
 Mengambil informasi profil dasar siswa.
+Harus menyertakan token saat request.
 
 **Request:**
-`GET /students/{studentId}\`
+`GET /api/students/1`
 
 **Response Example:**
 
 ```json
 {
-	"photo_profile": "https://cdn.example.com/profiles/avatar_123.jpg",
-	"name": "Andi Pratama",
-	"learning_style": "Visual",
-	"email": "andi.pratama@example.com",
-	"program": "Full Stack Web Development",
+	"photo_profile": "gambar.jpg",
+	"name": "Marcois Makalew",
+	"learning_style": "Consistent Learner",
+	"email": "email@email.com",
+	"program": "Asah",
 	"level": "Intermediate",
 	"joined_since": "2023-09-01"
 }
