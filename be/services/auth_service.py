@@ -1,6 +1,5 @@
 from repositories.student_repository import StudentRepository
-from datetime import datetime, timedelta
-import jwt as pyjwt
+from flask_jwt_extended import create_access_token
 
 class AuthService:
     @staticmethod
@@ -13,10 +12,9 @@ class AuthService:
         if not student.check_password(password):
             return None, "Password salah"
 
-        token = pyjwt.encode({
-            "id": student.id,
-            "email": student.email,
-            "exp": datetime.utcnow() + timedelta(hours=1)
-        }, "SECRET_KEY", algorithm="HS256")
-        
+        token = create_access_token(
+            identity=student.id,
+            additional_claims={"email": student.email}
+        )
+
         return token, None
