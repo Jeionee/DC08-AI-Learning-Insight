@@ -1,5 +1,5 @@
 from utils.extensions import db
-from models.students import Students
+from be.models.student import Students
 import string
 import random
 

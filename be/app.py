@@ -1,11 +1,10 @@
-from flask import Flask
+from flask import Flask, jsonify
 from utils.config import Config
 from utils.extensions import db, bcrypt, jwt, migrate
 from routes.auth.auth_routes import auth_bp
 from routes.prediction.prediction import predict_bp
-from flask import jsonify
+from routes.students import students_bp
 from flask_cors import CORS
-
 
 def create_app():
     app = Flask(__name__)
@@ -32,6 +31,7 @@ def create_app():
 
     app.register_blueprint(predict_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(students_bp)
 
     with app.app_context():
         db.create_all()
