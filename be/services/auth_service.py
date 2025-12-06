@@ -1,7 +1,5 @@
 from repositories.student_repository import StudentRepository
-from utils.extensions import jwt
-from werkzeug.security import check_password_hash
-from datetime import datetime
+from datetime import datetime, timedelta
 import jwt as pyjwt
 
 class AuthService:
@@ -12,10 +10,9 @@ class AuthService:
         if not student:
             return None, "Email tidak ditemukan"
         
-        if not student.check_password_hash(password, student.password):
+        if not student.check_password(password):
             return None, "Password salah"
 
-        # Membuat JWT token
         token = pyjwt.encode({
             "id": student.id,
             "email": student.email,

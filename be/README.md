@@ -8,6 +8,35 @@ Dokumentasi ini menyediakan informasi mengenai endpoint yang tersedia untuk meng
 
 ## Endpoints
 
+### Register
+
+**Request:**
+`POST /api/auth/login`
+
+**Body Request:**
+
+```json
+{
+	"name": "nama kamu",
+	"email": "EmailKamu@gmail.com",
+	"password": "PasswordKamu"
+}
+```
+
+### Register
+
+**Request:**
+`POST /api/auth/register`
+
+**Body Request:**
+
+```json
+{
+	"email": "emailKamu@gmail.com",
+	"password": "passwordKamu"
+}
+```
+
 ### 1. Get Student Profile
 
 Mengambil informasi profil dasar siswa.

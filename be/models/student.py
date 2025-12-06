@@ -1,7 +1,5 @@
-from utils.extensions import db
+from utils.extensions import db, bcrypt
 from datetime import datetime
-from werkzeug.security import check_password_hash
-
 
 class Student(db.Model):
     __tablename__ = "students"
@@ -26,7 +24,6 @@ class Student(db.Model):
             "level": self.level,
             "joined_since": self.joined_since.isoformat() if self.joined_since else None
         }
-        
-    @staticmethod
-    def check_password_hash(password, password_hash):
-        return check_password_hash(password_hash, password)
+
+    def check_password(self, plain_password):
+        return bcrypt.check_password_hash(self.password, plain_password)
