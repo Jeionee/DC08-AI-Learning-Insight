@@ -1,5 +1,6 @@
 from flask import Blueprint
 
-students_bp = Blueprint("students", __name__, url_prefix="/api/students")
+students_bp = Blueprint("students_bp", __name__, url_prefix="/api/students")
 
-from . import prediction, profile, daily_insights, weekly_activity, quiz_scores, recommendations, modules 
+
+from . import profile

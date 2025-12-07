@@ -7,23 +7,12 @@ auth_bp = Blueprint('auth_bp', __name__, url_prefix='/api/auth')
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-
-    email = data.get("email")
-    password = data.get("password")
-
-    if not email or not password:
-        return jsonify({"message": "Email dan password wajib diisi"}), 400
-
-    token, error = AuthService.login(email, password)
+    token, error = AuthService.login(data.get("email"), data.get("password"))
 
     if error:
         return jsonify({"message": error}), 400
 
-    return jsonify({
-        "message": "Login berhasil",
-        "token": token
-    }), 200
-
+    return jsonify({"message": "Login berhasil", "token": token}), 200
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
