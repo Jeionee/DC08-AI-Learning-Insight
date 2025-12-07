@@ -36,7 +36,6 @@ def register():
             "id": student.id,
             "name": student.name,
             "email": student.email,
-            "level": student.level,
             "joined_since": str(student.joined_since)
         }
     }), 201
