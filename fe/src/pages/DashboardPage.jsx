@@ -106,7 +106,6 @@ const Dashboard = ({ data }) => {
       />
 
       {/* Recommendations Section */}
-      <Recommendations recommendations={data.recommendations} />
 
       {/* Module Progress Section */}
       <ModuleProgress modules={data.modules} />
