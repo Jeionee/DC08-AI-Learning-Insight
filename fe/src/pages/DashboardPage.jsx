@@ -4,7 +4,6 @@ import Charts from "../components/Charts";
 import { FaGraduationCap } from "react-icons/fa6";
 /* components */
 import LearningStyle from "../components/LearningStyle";
-import ModuleProgress from "../components/ModuleProgress";
 import { AppContext } from "../contexts/contexts";
 
 const Dashboard = ({ data }) => {

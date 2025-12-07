@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { loginRequest } from "../api/authApi";
-import { Link } from "react-router-dom"; // Import Link untuk menambahkan tautan
 
 export default function Login({ onLogin }) {
 	const [email, setEmail] = useState("");
@@ -17,18 +16,7 @@ export default function Login({ onLogin }) {
 
 			return;
 		}
-
-		try {
-			//panggil API login dari file lain
-			const data = await loginRequest(email, password);
-
-			// ambil token dan user
-			localStorage.setItem("token", data.token);
-
-			onLogin();
-		} catch (err) {
-			setError("Email atau password salah");
-		}
+		await loginRequest(email, password);
 	};
 
 	return (

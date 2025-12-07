@@ -1,5 +1,3 @@
-import ModuleProgress from "../components/ModuleProgress";
-
 export default function ProgressPage() {
 	const modules = {
 		progress: {
@@ -18,7 +16,7 @@ export default function ProgressPage() {
 			<div className="mt-4 p-4 border rounded bg-white">
 				<h2 className="text-xl font-semibold mb-2">progress Belajar</h2>
 				{/* MODULE PROGRESS */}
-				<ModuleProgress modules={modules} />
+				{/* <ModuleProgress /> */}
 			</div>
 		</div>
 	);
