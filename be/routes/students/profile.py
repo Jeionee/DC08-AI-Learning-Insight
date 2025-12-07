@@ -4,6 +4,7 @@ from services.student_service import StudentService
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 @students_bp.route("/<int:student_id>", methods=["GET"])
+@jwt_required()
 def get_profile(student_id):
     try:
         student = StudentService.get_profile(student_id)

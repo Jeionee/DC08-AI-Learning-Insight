@@ -1,5 +1,6 @@
 from repositories.student_repository import StudentRepository
 from flask_jwt_extended import create_access_token
+from datetime import timedelta
 
 class AuthService:
     @staticmethod
@@ -13,8 +14,8 @@ class AuthService:
             return None, "Password salah"
 
         token = create_access_token(
-            identity=student.id,
-            additional_claims={"email": student.email}
+            identity=str(student.id),
+            expires_delta=timedelta(hours=1)
         )
 
         return token, None
