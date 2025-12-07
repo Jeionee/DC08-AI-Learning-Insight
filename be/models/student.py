@@ -4,14 +4,12 @@ from datetime import datetime
 class Student(db.Model):
     __tablename__ = "students"
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
     email = db.Column(db.String(120), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
     photo_profile = db.Column(db.String(255), nullable=True)
     name = db.Column(db.String(100), nullable=False)
     learning_style = db.Column(db.String(50), nullable=True)
-    program = db.Column(db.String(120), nullable=True)
-    level = db.Column(db.String(50), nullable=False, default="beginer")
     joined_since = db.Column(db.Date, nullable=False, default=datetime.utcnow)
 
     def to_dict(self):
@@ -20,8 +18,6 @@ class Student(db.Model):
             "name": self.name,
             "learning_style": self.learning_style,
             "email": self.email,
-            "program": self.program,
-            "level": self.level,
             "joined_since": self.joined_since.isoformat() if self.joined_since else None
         }
 

@@ -39,12 +39,12 @@ export default function ProfilePage({ user }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFormData({ ...formData, avatar: URL.createObjectURL(file) });
-    }
-  };
+	const handleAvatarChange = (e) => {
+		const file = e.target.files[0];
+		if (file) {
+			setFormData({ ...formData, avatar: URL.createObjectURL(file) });
+		}
+	};
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -74,68 +74,52 @@ export default function ProfilePage({ user }) {
             <input type="file" accept="image/*" onChange={handleAvatarChange} />
           </div>
 
-          {/* Name */}
-          <div>
-            <label className="block text-gray-700 font-medium">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full border rounded-xl p-3 mt-1"
-            />
-          </div>
+					{/* Name */}
+					<div>
+						<label className="block text-gray-700 font-medium">Name</label>
+						<input
+							type="text"
+							name="name"
+							value={formData.name}
+							onChange={handleChange}
+							className="w-full border rounded-xl p-3 mt-1"
+						/>
+					</div>
 
-          {/* Email */}
-          <div>
-            <label className="block text-gray-700 font-medium">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full border rounded-xl p-3 mt-1"
-            />
-          </div>
+					{/* Email */}
+					<div>
+						<label className="block text-gray-700 font-medium">Email</label>
+						<input
+							type="email"
+							name="email"
+							value={formData.email}
+							onChange={handleChange}
+							className="w-full border rounded-xl p-3 mt-1"
+						/>
+					</div>
 
-          {/* Learning Style */}
-          <div>
-            <label className="block text-gray-700 font-medium">
-              Learning Style
-            </label>
-            <select
-              name="learning_style"
-              value={formData.learning_style || ""}
-              onChange={handleChange}
-              className="w-full border rounded-xl p-3 mt-1"
-            >
-              <option value="">-- Pilih Learning Style --</option>
-              <option value="consistent">Consistent Learner</option>
-              <option value="fast">Fast Learner</option>
-              <option value="reflective">Reflective Learner</option>
-            </select>
-          </div>
+					{/* Buttons */}
+					<div className="flex space-x-3 mt-4">
+						<button type="submit" className="px-6 py-3 bg-blue-600 text-white rounded-xl shadow">
+							Save
+						</button>
+						<button
+							type="button"
+							onClick={() => setIsEditing(false)}
+							className="px-6 py-3 bg-gray-300 rounded-xl"
+						>
+							Cancel
+						</button>
+					</div>
+				</form>
+			</div>
+		);
+	}
 
-          {/* Buttons */}
-          <div className="flex space-x-3 mt-4">
-            <button
-              type="submit"
-              className="px-6 py-3 bg-blue-600 text-white rounded-xl shadow"
-            >
-              Save
-            </button>
-            <button
-              type="button"
-              onClick={() => setIsEditing(false)}
-              className="px-6 py-3 bg-gray-300 rounded-xl"
-            >
-              Cancel
-            </button>
-          </div>
-        </form>
-      </div>
-    );
-  }
+	// ===== MODE VIEW =====
+	return (
+		<div className="p-4">
+			<h1 className="text-3xl font-bold text-gray-900 mb-8">Your Profile</h1>
 
   // ===== MODE VIEW =====
   return (

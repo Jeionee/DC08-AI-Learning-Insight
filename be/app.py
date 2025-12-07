@@ -40,7 +40,7 @@ def create_app():
     # Register Blueprints
     app.register_blueprint(auth_bp)
     app.register_blueprint(students_bp)
-    app.register_blueprint(predict_bp)  # Register prediction blueprint
+    app.register_blueprint(predict_bp)
 
     # Create database tables
     with app.app_context():

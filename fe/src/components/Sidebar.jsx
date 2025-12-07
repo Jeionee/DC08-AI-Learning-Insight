@@ -39,26 +39,6 @@ export default function Sidebar({ open }) {
               Progress
             </Link>
           </li>
-
-          <li>
-            <Link
-              to="/recommendation"
-              className="flex items-center p-3 rounded-lg hover:bg-[#1F2A38] transition"
-            >
-              <PiListChecksBold size={22} className="mr-3" />
-              Recommendation
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              to="/challenges"
-              className="flex items-center p-3 rounded-lg hover:bg-[#1F2A38] transition"
-            >
-              <FaTrophy size={20} className="mr-3" />
-              Challenges
-            </Link>
-          </li>
         </ul>
       </nav>
     </div>

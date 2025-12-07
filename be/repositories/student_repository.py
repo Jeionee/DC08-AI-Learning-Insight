@@ -15,13 +15,12 @@ class StudentRepository:
         return Student.query.filter_by(email=email).first()
 
     @staticmethod
-    def create(name, email, password_hashed, level="beginer"):
+    def create(name, email, password_hashed):
         student = Student(
             name=name,
             email=email,
-            password=password_hashed,
-            level=level
+            password=password_hashed
         )
         db.session.add(student)
         db.session.commit()
-        return student
+        return student, None
