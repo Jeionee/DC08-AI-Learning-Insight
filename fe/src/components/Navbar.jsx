@@ -1,34 +1,19 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { IoIosLogOut } from "react-icons/io";
 import { FiChevronDown } from "react-icons/fi";
-import { getStudent } from "../api/studentApi";
+import { IoReorderThree } from "react-icons/io5";
+import { AppContext } from "../contexts/contexts";
 
 export default function Navbar({ toggleSidebar, onLogout }) {
 	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
 	const dropdownRef = useRef(null);
-	const [student, setStudent] = useState({
-		name: "",
-	});
-
-	useEffect(() => {
-		fetchData();
-	}, []);
-
-	async function fetchData() {
-		try {
-			const data = await getStudent();
-			setStudent({
-				name: data.name,
-			});
-		} catch (error) {
-			console.error("Gagal mengambil data:", error);
-		}
-	}
+	const { name } = useContext(AppContext);
 	const handleLogout = () => {
 		onLogout();
+		localStorage.removeItem("token");
 		navigate("/login");
 	};
 
@@ -44,12 +29,11 @@ export default function Navbar({ toggleSidebar, onLogout }) {
 
 	return (
 		<div className="w-full h-16 bg-white shadow fixed top-0 left-0 z-50 flex items-center px-6">
-			{/* HAMBURGER BUTTON */}
 			<button
 				onClick={toggleSidebar}
 				className="text-gray-700 text-2xl mr-4 hover:text-black transition duration-200"
 			>
-				☰
+				<IoReorderThree size={35} />
 			</button>
 
 			{/* LOGO */}
@@ -63,10 +47,10 @@ export default function Navbar({ toggleSidebar, onLogout }) {
 					onClick={() => setOpen(!open)}
 				>
 					<div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
-						{student?.name?.charAt(0) || "U"}
+						{"O"}
 					</div>
 
-					<span className="text-gray-700 font-medium">{student.name}</span>
+					<span className="text-gray-700 font-medium">{name}</span>
 
 					{/* Chevron Icon */}
 					<FiChevronDown

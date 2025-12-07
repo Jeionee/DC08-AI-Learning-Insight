@@ -3,7 +3,6 @@ import { Eye, EyeOff } from "lucide-react";
 import { loginRequest } from "../api/authApi";
 import { Link } from "react-router-dom"; // Import Link untuk menambahkan tautan
 
-
 export default function Login({ onLogin }) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -25,7 +24,6 @@ export default function Login({ onLogin }) {
 
 			// ambil token dan user
 			localStorage.setItem("token", data.token);
-			localStorage.setItem("user", JSON.stringify(data.user));
 
 			onLogin();
 		} catch (err) {

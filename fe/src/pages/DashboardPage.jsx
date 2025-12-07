@@ -1,45 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import StatsCard from "../components/StatsCard";
 import Charts from "../components/Charts";
 import { FaGraduationCap } from "react-icons/fa6";
 /* components */
 import LearningStyle from "../components/LearningStyle";
 import ModuleProgress from "../components/ModuleProgress";
-import Recommendations from "../components/Recommendation";
-import { getStudent } from "../api/studentApi";
+import { AppContext } from "../contexts/contexts";
 
 const Dashboard = ({ data }) => {
-	const [student, setStudent] = useState({
-		name: data.name,
-		email: data.email,
-		learning_style: data.learning_style,
-		avatar: data.photo_profile,
-		joined_since: data.joined_since,
-	});
-
+	const { name, learning_style } = useContext(AppContext);
 	const formatTime = (minutes) => {
 		const hours = Math.floor(minutes / 60);
 		const mins = minutes % 60;
 		return `${hours}h ${mins}m`;
 	};
-	useEffect(() => {
-		async function fetchData() {
-			try {
-				const data = await getStudent();
-				setStudent({
-					name: data.name,
-					email: data.email,
-					learning_style: data.learning_style,
-					avatar: data.photo_profile,
-					joined_since: data.joined_since,
-				});
-			} catch (error) {
-				console.error("Gagal mengambil data:", error);
-			}
-		}
-
-		fetchData();
-	}, []);
 
 	return (
 		<div className="flex-1 pr-8 py-1 pl-0 border-0">
@@ -47,7 +21,7 @@ const Dashboard = ({ data }) => {
 			<div className="mb-8">
 				<h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
 				<p className="text-gray-600">
-					Selamat datang kembali, <b>{student.name}</b> ! Mari lanjutkan pembelajaranmu.
+					Selamat datang kembali, <b>{name}</b> ! Mari lanjutkan pembelajaranmu.
 				</p>
 			</div>
 
@@ -98,7 +72,7 @@ const Dashboard = ({ data }) => {
 				</div>
 
 				{/* LEARNING STYLE */}
-				<LearningStyle learningStyles={student} />
+				<LearningStyle learning_style={learning_style} />
 			</div>
 
 			{/* CHARTS */}
@@ -106,9 +80,6 @@ const Dashboard = ({ data }) => {
 				weeklyActivity={data.weeklyActivity}
 				learningDistribution={data.learningDistribution}
 			/>
-
-			{/* MODULE PROGRESS */}
-			<ModuleProgress modules={data.modules} />
 		</div>
 	);
 };

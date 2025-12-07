@@ -1,6 +1,6 @@
 import { FaGraduationCap } from "react-icons/fa6";
 
-export default function LearningStyle({ learningStyles }) {
+export default function LearningStyle({ learning_style }) {
 	return (
 		<div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
 			<div className="flex items-start gap-3 mb-3">
@@ -16,9 +16,9 @@ export default function LearningStyle({ learningStyles }) {
 
 			{/* Highlight Box */}
 			<div className="rounded-xl p-5 bg-blue-50 border border-blue-100">
-				<h3 className="text-blue-700 font-bold text-lg mb-1">{learningStyles.name}</h3>
+				<h3 className="text-blue-700 font-bold text-lg mb-1">{learning_style}</h3>
 
-				<p className="text-gray-600 text-sm leading-relaxed">{learningStyles.description}</p>
+				<p className="text-gray-600 text-sm leading-relaxed"></p>
 			</div>
 		</div>
 	);
