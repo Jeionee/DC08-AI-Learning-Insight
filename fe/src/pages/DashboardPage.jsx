@@ -19,7 +19,7 @@ const Dashboard = ({ data }) => {
 			{/* HEADER */}
 			<div className="mb-8">
 				<h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-				<p className="text-gray-600">
+				<p className="text-gray-600 my-3">
 					Selamat datang kembali, <b>{name}</b> ! Mari lanjutkan pembelajaranmu.
 				</p>
 			</div>
