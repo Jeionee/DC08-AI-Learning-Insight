@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getStudent } from "../api/studentApi";
+import dateFormatter from "../utils/dateFormatter";
 
 export default function ProfilePage({ user }) {
 	const [student, setStudent] = useState(null);
@@ -9,12 +10,13 @@ export default function ProfilePage({ user }) {
 		email: "",
 		learning_style: "",
 		avatar: null,
+		joined_since: "",
 	});
 
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const data = await getStudent(5);
+				const data = await getStudent();
 				setStudent(data);
 
 				setFormData({
@@ -22,6 +24,7 @@ export default function ProfilePage({ user }) {
 					email: data.email,
 					learning_style: data.learning_style,
 					avatar: data.photo_profile,
+					joined_since: data.joined_since,
 				});
 			} catch (error) {
 				console.error("Gagal mengambil data:", error);
@@ -131,16 +134,7 @@ export default function ProfilePage({ user }) {
 
 					<div className="mt-4 flex items-center space-x-3">
 						<span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-							Bergabung Sejak{" "}
-							{student.joined_since
-								? (() => {
-										const date = new Date(student.joined_since);
-										const day = String(date.getDate()).padStart(2, "0");
-										const month = String(date.getMonth() + 1).padStart(2, "0");
-										const year = date.getFullYear();
-										return `${day}-${month}-${year}`;
-								  })()
-								: "-"}
+							Bergabung Sejak {student.joined_since && dateFormatter(student.joined_since)}
 						</span>
 					</div>
 				</div>

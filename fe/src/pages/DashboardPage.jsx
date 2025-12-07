@@ -1,34 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import StatsCard from "../components/StatsCard";
 import Charts from "../components/Charts";
-import Recommendations from "../components/Recommendation";
-import ModuleProgress from "../components/ModuleProgress";
 import { FaGraduationCap } from "react-icons/fa6";
-import axios from "axios";
+/* components */
+import LearningStyle from "../components/LearningStyle";
+import { AppContext } from "../contexts/contexts";
 
 const Dashboard = ({ data }) => {
+	const { name, learning_style } = useContext(AppContext);
 	const formatTime = (minutes) => {
 		const hours = Math.floor(minutes / 60);
 		const mins = minutes % 60;
 		return `${hours}h ${mins}m`;
-	};
-
-	const learningStyles = {
-		consistent: {
-			name: "Consistent Learner",
-			description: "You learn best with regular, structured study sessions",
-			color: "bg-blue-50 border-blue-200",
-		},
-		fast: {
-			name: "Fast Learner",
-			description: "You quickly grasp new concepts and prefer accelerated learning",
-			color: "bg-amber-50 border-amber-200",
-		},
-		reflective: {
-			name: "Reflective Learner",
-			description: "You prefer to think deeply and reflect on what you've learned",
-			color: "bg-purple-50 border-purple-200",
-		},
 	};
 
 	return (
@@ -36,8 +19,8 @@ const Dashboard = ({ data }) => {
 			{/* HEADER */}
 			<div className="mb-8">
 				<h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-				<p className="text-gray-600">
-					Selamat datang kembali, {data.user.name || "User"}! Mari lanjutkan pembelajaranmu.
+				<p className="text-gray-600 my-3">
+					Selamat datang kembali, <b>{name}</b> ! Mari lanjutkan pembelajaranmu.
 				</p>
 			</div>
 
@@ -88,30 +71,7 @@ const Dashboard = ({ data }) => {
 				</div>
 
 				{/* LEARNING STYLE */}
-				<div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-					{/* Header */}
-					<div className="flex items-start gap-3 mb-3">
-						<div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-							<FaGraduationCap size={20} className="text-blue-600" />
-						</div>
-
-						<div>
-							<h2 className="text-gray-800 font-bold text-lg">Learning Style</h2>
-							<p className="text-gray-500 text-xs -mt-0">Gaya Belajar</p>
-						</div>
-					</div>
-
-					{/* Highlight Box */}
-					<div className="rounded-xl p-5 bg-blue-50 border border-blue-100">
-						<h3 className="text-blue-700 font-bold text-lg mb-1">
-							{learningStyles[data.user.learningStyle].name}
-						</h3>
-
-						<p className="text-gray-600 text-sm leading-relaxed">
-							{learningStyles[data.user.learningStyle].description}
-						</p>
-					</div>
-				</div>
+				<LearningStyle learning_style={learning_style} />
 			</div>
 
 			{/* CHARTS */}
@@ -119,9 +79,6 @@ const Dashboard = ({ data }) => {
 				weeklyActivity={data.weeklyActivity}
 				learningDistribution={data.learningDistribution}
 			/>
-
-			{/* MODULE PROGRESS */}
-			<ModuleProgress modules={data.modules} />
 		</div>
 	);
 };

@@ -1,21 +1,32 @@
 import axios from "axios";
+const API_URL = "http://127.0.0.1:5000/api";
 
-const API_URL = "http://127.0.0.1:5000";
+export async function getStudent() {
+	try {
+		const token = localStorage.getItem("token");
+		const headers = {
+			Authorization: `Bearer ${token}`,
+		};
+		const response = await axios.get(`${API_URL}/students/profile`, { headers });
+		return response.data;
+	} catch (error) {
+		console.error("Gagal mengambil data student:", error);
+		throw error;
+	}
+}
 
-// Get student by ID
-export async function getStudent(studentId) {
-  try {
-    const token = localStorage.getItem("token"); // ambil token dari login
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    const response = await axios.get(`${API_URL}/api/students/${studentId}`, { headers });
-    return response.data; // data dari Flask API
-  } catch (error) {
-    console.error("Gagal mengambil data student:", error);
-    throw error;
-  }
+export async function predictStudent() {
+	try {
+		const token = localStorage.getItem("token");
+		const headers = {
+			Authorization: `Bearer ${token}`,
+		};
+		const response = await axios.get(`${API_URL}/predict`, { headers });
+		return response.data;
+	} catch (error) {
+		console.error("Gagal mengambil data student:", error);
+		throw error;
+	}
 }
 
 // // Update student
@@ -27,4 +38,3 @@ export async function getStudent(studentId) {
 //   });
 
 //   return response.data.data;
-
