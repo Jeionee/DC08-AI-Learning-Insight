@@ -3,19 +3,19 @@ import axios from "axios";
 const API_URL = "http://127.0.0.1:5000";
 
 // Get student by ID
-export async function getStudent(studentId) {
-  try {
-    const token = localStorage.getItem("token"); // ambil token dari login
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+export async function getStudent() {
+	try {
+		const token = localStorage.getItem("token"); // ambil token dari login
+		const headers = {
+			Authorization: `Bearer ${token}`,
+		};
 
-    const response = await axios.get(`${API_URL}/api/students/${studentId}`, { headers });
-    return response.data; // data dari Flask API
-  } catch (error) {
-    console.error("Gagal mengambil data student:", error);
-    throw error;
-  }
+		const response = await axios.get(`${API_URL}/api/students/profile`, { headers });
+		return response.data; // data dari Flask API
+	} catch (error) {
+		console.error("Gagal mengambil data student:", error);
+		throw error;
+	}
 }
 
 // // Update student
@@ -27,4 +27,3 @@ export async function getStudent(studentId) {
 //   });
 
 //   return response.data.data;
-
