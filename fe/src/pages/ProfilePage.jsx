@@ -1,13 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getStudent } from "../api/studentApi";
 
 export default function ProfilePage({ user }) {
+  const [student, setStudent] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    name: user.name,
-    email: user.email,
-    learningStyle: user.learningStyle,
-    avatar: user.avatar || null, // bisa URL foto user
+    name: "",
+    email: "",
+    learning_style: "",
+    avatar: null,
   });
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getStudent(6);
+        setStudent(data);
+
+        setFormData({
+          name: data.name,
+          email: data.email,
+          learning_style: data.learning_style,
+          avatar: data.photo_profile,
+        });
+      } catch (error) {
+        console.error("Gagal mengambil data:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  if (!student) {
+    return <p className="p-6 text-gray-600">Loading...</p>;
+  }
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,7 +50,6 @@ export default function ProfilePage({ user }) {
     e.preventDefault();
     console.log("Data disimpan:", formData);
     setIsEditing(false);
-    // TODO: kirim formData ke server untuk disimpan
   };
 
   // ===== MODE EDIT =====
@@ -43,7 +68,7 @@ export default function ProfilePage({ user }) {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                user.name.charAt(0)
+                student.name.charAt(0)
               )}
             </div>
             <input type="file" accept="image/*" onChange={handleAvatarChange} />
@@ -79,11 +104,12 @@ export default function ProfilePage({ user }) {
               Learning Style
             </label>
             <select
-              name="learningStyle"
-              value={formData.learningStyle}
+              name="learning_style"
+              value={formData.learning_style || ""}
               onChange={handleChange}
               className="w-full border rounded-xl p-3 mt-1"
             >
+              <option value="">-- Pilih Learning Style --</option>
               <option value="consistent">Consistent Learner</option>
               <option value="fast">Fast Learner</option>
               <option value="reflective">Reflective Learner</option>
@@ -113,66 +139,68 @@ export default function ProfilePage({ user }) {
 
   // ===== MODE VIEW =====
   return (
-    <div className="p-4">
+    <div className="p-0">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Your Profile</h1>
 
       {/* PROFILE CARD */}
       <div className="bg-white rounded-2xl shadow-md border p-8 flex items-center space-x-8">
         <div className="w-32 h-32 rounded-full bg-slate-700 text-white flex items-center justify-center text-4xl font-bold shadow-lg overflow-hidden">
-          {formData.avatar ? (
+          {student.photo_profile ? (
             <img
-              src={formData.avatar}
+              src={student.photo_profile}
               alt="Avatar"
               className="w-full h-full object-cover"
             />
           ) : (
-            user.name.charAt(0)
+            student.name.charAt(0)
           )}
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">{user.name}</h2>
+          <h2 className="text-2xl font-bold text-gray-900">{student.name}</h2>
           <p className="text-gray-600 mt-1">Student at LeanSmart Academy</p>
 
           <div className="mt-4 flex items-center space-x-3">
             <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-              Bergabung Sejak 2025
+              Bergabung Sejak{" "}
+              {student.joined_since
+                ? (() => {
+                    const date = new Date(student.joined_since);
+                    const day = String(date.getDate()).padStart(2, "0");
+                    const month = String(date.getMonth() + 1).padStart(2, "0");
+                    const year = date.getFullYear();
+                    return `${day}-${month}-${year}`;
+                  })()
+                : "-"}
             </span>
           </div>
         </div>
       </div>
 
-      {/* BIO SECTION */}
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* LEARNING STYLE & INFORMASI DETAIL (1 CARD) */}
+      <div className="mt-8 grid grid-cols-1 gap-6">
         <div className="bg-white border shadow-sm p-6 rounded-xl">
           <h3 className="text-xl font-semibold text-gray-900 mb-3">
             Learning Style
           </h3>
           <p className="text-gray-600 mb-4">Kamu belajar dengan pendekatan:</p>
-          <div className="flex items-center space-x-3">
-            <span className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">
-              {user.learningStyle === "consistent"
+          <span className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">
+            {student.learning_style
+              ? student.learning_style === "consistent"
                 ? "Consistent Learner"
-                : user.learningStyle === "fast"
+                : student.learning_style === "fast"
                 ? "Fast Learner"
-                : "Reflective Learner"}
-            </span>
-          </div>
-        </div>
+                : "Reflective Learner"
+              : "Belum ditentukan"}
+          </span>
 
-        <div className="bg-white border shadow-sm p-6 rounded-xl">
+          <hr className="my-6" />
+
           <h3 className="text-xl font-semibold text-gray-900 mb-3">
-            Detail Informasi
+            Informasi Detail
           </h3>
           <ul className="text-gray-700 space-y-2">
             <li>
-              <strong className="text-gray-900">Email:</strong> {user.email}
-            </li>
-            <li>
-              <strong className="text-gray-900">Program:</strong> Front-End
-              Learning Path
-            </li>
-            <li>
-              <strong className="text-gray-900">Level:</strong> Intermediate
+              <strong className="text-gray-900">Email:</strong> {student.email}
             </li>
           </ul>
         </div>
