@@ -138,9 +138,6 @@ export default function ProfilePage({ user }) {
 						<li>
 							<strong className="text-gray-900">Program:</strong> Front-End Learning Path
 						</li>
-						<li>
-							<strong className="text-gray-900">Level:</strong> Intermediate
-						</li>
 					</ul>
 				</div>
 			</div>
