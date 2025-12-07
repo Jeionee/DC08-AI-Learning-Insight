@@ -2,16 +2,13 @@ import axios from "axios";
 
 const API_URL = "http://127.0.0.1:5000";
 
-// Get student by ID
 export async function getStudent() {
 	try {
-		const token = localStorage.getItem("token"); // ambil token dari login
-		const headers = {
+		const token = localStorage.getItem("token");
+		const response = await axios.get(`${API_URL}/api/students/profile`, {
 			Authorization: `Bearer ${token}`,
-		};
-
-		const response = await axios.get(`${API_URL}/api/students/profile`, { headers });
-		return response.data; // data dari Flask API
+		});
+		return response.data;
 	} catch (error) {
 		console.error("Gagal mengambil data student:", error);
 		throw error;

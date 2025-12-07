@@ -14,20 +14,19 @@ export default function Navbar({ toggleSidebar, onLogout }) {
 	});
 
 	useEffect(() => {
-		async function fetchData() {
-			try {
-				const data = await getStudent();
-				setStudent({
-					name: data.name,
-				});
-			} catch (error) {
-				console.error("Gagal mengambil data:", error);
-			}
-		}
-
 		fetchData();
 	}, []);
 
+	async function fetchData() {
+		try {
+			const data = await getStudent();
+			setStudent({
+				name: data.name,
+			});
+		} catch (error) {
+			console.error("Gagal mengambil data:", error);
+		}
+	}
 	const handleLogout = () => {
 		onLogout();
 		navigate("/login");
@@ -67,7 +66,7 @@ export default function Navbar({ toggleSidebar, onLogout }) {
 						{student?.name?.charAt(0) || "U"}
 					</div>
 
-					<span className="text-gray-700 font-medium">{student?.name || "User"}</span>
+					<span className="text-gray-700 font-medium">{student.name}</span>
 
 					{/* Chevron Icon */}
 					<FiChevronDown
