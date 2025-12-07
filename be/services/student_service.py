@@ -28,3 +28,8 @@ class StudentService:
         
         logging.debug(f"Student created successfully: {student.id}")
         return student, None
+
+    @staticmethod
+    def get_profile(student_id):
+        # Ambil data student berdasarkan ID
+        return StudentRepository.get_by_id(student_id)

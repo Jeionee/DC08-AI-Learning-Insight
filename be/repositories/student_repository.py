@@ -21,10 +21,6 @@ class StudentRepository:
             email=email,
             password=password_hashed
         )
-        try:
-            db.session.add(student)
-            db.session.commit()
-        except Exception as e:
-            db.session.rollback()  # Rollback jika terjadi kesalahan
-            raise e  # Pastikan exception ini ditangani dengan benar
+        db.session.add(student)
+        db.session.commit()
         return student, None
