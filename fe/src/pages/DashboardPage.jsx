@@ -5,13 +5,40 @@ import Recommendations from "../components/Recommendation";
 import ModuleProgress from "../components/ModuleProgress";
 import { FaGraduationCap } from "react-icons/fa6";
 import axios from "axios";
+import { getStudent } from "../api/studentApi";
 
 const Dashboard = ({ data }) => {
+	const [student, setStudent] = useState({
+		name: data.name,
+		email: data.email,
+		learning_style: data.learning_style,
+		avatar: data.photo_profile,
+		joined_since: data.joined_since,
+	});
+
 	const formatTime = (minutes) => {
 		const hours = Math.floor(minutes / 60);
 		const mins = minutes % 60;
 		return `${hours}h ${mins}m`;
 	};
+	useEffect(() => {
+		async function fetchData() {
+			try {
+				const data = await getStudent();
+				setStudent({
+					name: data.name,
+					email: data.email,
+					learning_style: data.learning_style,
+					avatar: data.photo_profile,
+					joined_since: data.joined_since,
+				});
+			} catch (error) {
+				console.error("Gagal mengambil data:", error);
+			}
+		}
+
+		fetchData();
+	}, []);
 
 	const learningStyles = {
 		consistent: {
@@ -37,7 +64,7 @@ const Dashboard = ({ data }) => {
 			<div className="mb-8">
 				<h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
 				<p className="text-gray-600">
-					Selamat datang kembali, {data.user.name || "User"}! Mari lanjutkan pembelajaranmu.
+					Selamat datang kembali, <b>{student.name}</b> ! Mari lanjutkan pembelajaranmu.
 				</p>
 			</div>
 
