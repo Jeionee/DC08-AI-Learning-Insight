@@ -39,63 +39,72 @@ const Dashboard = ({ data }) => {
 				</p>
 			</div>
 
-			{/* TOP CARDS */}
-			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-				{/* TIME SPENT LEARNING */}
-				<div className="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 border border-gray-100 relative">
-					<h3 className="text-gray-600 text-sm font-medium mb-2">Time Spent Learning</h3>
+      {/* TOP CARDS */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        {/* TIME SPENT LEARNING */}
+        <div className="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 border border-gray-100 relative">
+          <h3 className="text-gray-600 text-sm font-medium mb-2">
+            Time Spent Learning
+          </h3>
 
-					<div className="text-4xl font-bold text-gray-900 mb-1">
-						{formatTime(data.progress.timeSpentToday)}
-					</div>
+          <div className="text-4xl font-bold text-gray-900 mb-1">
+            {formatTime(data.progress.timeSpentToday)}
+          </div>
 
-					<p className="text-gray-600 text-sm mb-4">Hari ini</p>
+          <p className="text-gray-600 text-sm mb-4">Hari ini</p>
 
-					{/* Progress Bar */}
-					<div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden mb-3">
-						<div
-							className="bg-blue-600 h-2"
-							style={{
-								width: `${(data.progress.timeSpentToday / data.progress.dailyGoal) * 100}%`,
-							}}
-						></div>
-					</div>
+          {/* Progress Bar */}
+          <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden mb-3">
+            <div
+              className="bg-blue-600 h-2"
+              style={{
+                width: `${
+                  (data.progress.timeSpentToday / data.progress.dailyGoal) * 100
+                }%`,
+              }}
+            ></div>
+          </div>
 
-					<div className="flex justify-between text-sm text-gray-600">
-						<span>Target harian: {formatTime(data.progress.dailyGoal)}</span>
-						<span>
-							{Math.floor((data.progress.timeSpentToday / data.progress.dailyGoal) * 100)}%
-						</span>
-					</div>
+          <div className="flex justify-between text-sm text-gray-600">
+            <span>Target harian: {formatTime(data.progress.dailyGoal)}</span>
+            <span>
+              {Math.floor(
+                (data.progress.timeSpentToday / data.progress.dailyGoal) * 100
+              )}
+              %
+            </span>
+          </div>
 
-					{/* BULAT INFO */}
-					<div
-						className="
+          {/* BULAT INFO */}
+          <div
+            className="
               absolute right-6 top-6
               w-24 h-24 rounded-full
               bg-blue-50 border border-blue-200
               flex flex-col justify-center items-center
               text-center
             "
-					>
-						<span className="text-xl font-bold text-blue-800">
-							{data.progress.averageDailyHours}3.6/hari
-						</span>
-						<span className="text-[11px] text-blue-700">Rata-rata jam belajar</span>
-					</div>
-				</div>
+          >
+            <span className="text-xl font-bold text-blue-800">
+              {data.progress.averageDailyHours}3.6/hari
+            </span>
+            <span className="text-[11px] text-blue-700">
+              Rata-rata jam belajar
+            </span>
+          </div>
+        </div>
 
-				{/* LEARNING STYLE */}
-				<LearningStyle learning_style={learning_style} />
-			</div>
+        {/* LEARNING STYLE */}
+        <LearningStyle learning_style={learning_style} />
+      </div>
 
-			{/* CHARTS */}
-			<Charts
-				weeklyActivity={data.weeklyActivity}
-				learningDistribution={data.learningDistribution}
-			/>
-		</div>
-	);
+      {/* CHARTS */}
+      <Charts
+        weeklyActivity={data.weeklyActivity}
+        learningDistribution={data.learningDistribution}
+      />
+    </div>
+  );
 };
 
 export default Dashboard;
