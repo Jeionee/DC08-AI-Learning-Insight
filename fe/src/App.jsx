@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AppContext } from "./contexts/contexts";
 import { getStudent } from "./api/studentApi";
@@ -166,7 +166,12 @@ const App = () => {
 					<Route index element={<Navigate to="/dashboard" replace />} />
 					<Route path="dashboard" element={<Dashboard data={learningData} />} />
 					<Route path="profile" element={<ProfilePage user={learningData.user} />} />
-					<Route path="progress" element={<ProgressPage progress={learningData.progress} modules={learningData.modules} />} />
+					<Route
+						path="progress"
+						element={
+							<ProgressPage progress={learningData.progress} modules={learningData.modules} />
+						}
+					/>
 					<Route path="recommendation" element={<RecommendationPage />} />
 					<Route path="challenges" element={<ChallengesPage />} />
 				</Route>

@@ -22,7 +22,12 @@ const Dashboard = ({ data }) => {
 	};
 	useEffect(() => {
 		const d = getDailyProgress();
-		setDailyProgress(d.percentage);
+		setDailyProgress({
+			percentage: d.percentage,
+			student_id: d.student_id,
+			target_hours: d,
+			time_spent_hours: d.time_spent_hours,
+		});
 	}, []);
 	return (
 		<div className="flex-1 pr-8 py-1 pl-0 border-0">
