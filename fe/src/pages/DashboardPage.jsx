@@ -2,27 +2,42 @@ import React, { useEffect, useState, useContext } from "react";
 import StatsCard from "../components/StatsCard";
 import Charts from "../components/Charts";
 import { FaGraduationCap } from "react-icons/fa6";
+import { getDailyProgress } from "../api/studentApi";
 /* components */
 import LearningStyle from "../components/LearningStyle";
 import { AppContext } from "../contexts/contexts";
 
 const Dashboard = ({ data }) => {
-  const { name, learning_style } = useContext(AppContext);
-  const formatTime = (minutes) => {
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    return `${hours}h ${mins}m`;
-  };
-
-  return (
-    <div className="flex-1 pr-8 py-1 pl-0 border-0">
-      {/* HEADER */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-600 my-3">
-          Selamat datang kembali, <b>{name}</b> ! Mari lanjutkan pembelajaranmu.
-        </p>
-      </div>
+	const { name, learning_style } = useContext(AppContext);
+	const [dailyProgress, setDailyProgress] = useState({
+		percentage: 0,
+		student_id: 0,
+		target_hours: 0,
+		time_spent_hours: 0,
+	});
+	const formatTime = (minutes) => {
+		const hours = Math.floor(minutes / 60);
+		const mins = minutes % 60;
+		return `${hours}h ${mins}m`;
+	};
+	useEffect(() => {
+		const d = getDailyProgress();
+		setDailyProgress({
+			percentage: d.percentage,
+			student_id: d.student_id,
+			target_hours: d,
+			time_spent_hours: d.time_spent_hours,
+		});
+	}, []);
+	return (
+		<div className="flex-1 pr-8 py-1 pl-0 border-0">
+			{/* HEADER */}
+			<div className="mb-8">
+				<h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+				<p className="text-gray-600 my-3">
+					Selamat datang kembali, <b>{name}</b> ! Mari lanjutkan pembelajaranmu.
+				</p>
+			</div>
 
       {/* TOP CARDS */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">

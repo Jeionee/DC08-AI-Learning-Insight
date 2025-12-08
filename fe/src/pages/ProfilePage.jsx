@@ -147,11 +147,15 @@ export default function ProfilePage({ user }) {
 					<p className="text-gray-600 mb-4">Kamu belajar dengan pendekatan:</p>
 					<span className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">
 						{student.learning_style
-							? student.learning_style === "consistent"
+							? student.learning_style === "Consistent Learner"
 								? "Consistent Learner"
-								: student.learning_style === "fast"
+								: student.learning_style === "Consistent Learner"
 								? "Fast Learner"
-								: "Reflective Learner"
+								: student.learning_style === "Fast Learner"
+								? "Reflective Learner"
+								: student.learning_style === "Reflective Learner"
+								? "Casual Learner"
+								: student.learning_style === "Casual Learner"
 							: "Belum ditentukan"}
 					</span>
 
