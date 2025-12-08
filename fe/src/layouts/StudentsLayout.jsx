@@ -24,7 +24,7 @@ export default function StudentsLayout({ student, onLogout }) {
 
         {/* MAIN CONTENT */}
         <main
-          className={`flex-1 p-8 bg-gray-50 transition-all duration-300
+          className={`flex-1 py-8 px-24 bg-gray-50 transition-all duration-300
             ${openSidebar ? "ml-64" : "ml-0"}
           `}
         >
