@@ -14,3 +14,9 @@ export async function loginRequest(email, password) {
 		throw error;
 	}
 }
+
+export async function forgotPasswordRequest(email) {
+  const response = await axios.post(`${API_URL}/api/auth/forgot-password`, {
+    email,
+  });
+}
