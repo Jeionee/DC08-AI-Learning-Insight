@@ -1,6 +1,7 @@
 import logging
 from repositories.student_repository import StudentRepository
 from utils.extensions import bcrypt
+from datetime import datetime
 
 class StudentService:
     @staticmethod
@@ -33,3 +34,27 @@ class StudentService:
     def get_profile(student_id):
         # Ambil data student berdasarkan ID
         return StudentRepository.get_by_id(student_id)
+    
+    @staticmethod
+    def get_learning_progress(student_id, target_hours=5.0):
+        # Ambil data tracking berdasarkan student_id
+        tracking = StudentRepository.get_by_student_id(student_id)
+        if not tracking:
+            return None, "Tracking data not found"
+        
+        # Konversi datetime
+        fmt = "%Y-%m-%d %H:%M:%S"
+        first_dt = datetime.strptime(tracking.first_opened_at, fmt)
+        last_dt = datetime.strptime(tracking.last_viewed, fmt)
+
+        # Hitung durasi belajar (jam)
+        elapsed_hours = (last_dt - first_dt).total_seconds() / 3600.0
+
+        # Hitung persentase terhadap target
+        progress_percentage = min((elapsed_hours / target_hours) * 100, 100)
+
+        return {
+            "elapsed_hours": elapsed_hours,
+            "target_hours": target_hours,
+            "progress_percentage": progress_percentage
+        }, None
