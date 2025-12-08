@@ -1,36 +1,16 @@
-import { useState } from "react";
-import Navbar from "../components/Navbar";
-import Sidebar from "../components/Sidebar";
+// StudentsLayout.jsx (Separate File)
 import { Outlet } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
-export default function StudentsLayout({ student, onLogout }) {
-  const [openSidebar, setOpenSidebar] = useState(true);
-
+export default function StudentsLayout({ onLogout }) {
   return (
     <div className="w-full min-h-screen flex flex-col">
+      <Navbar onLogout={onLogout} />
 
-      {/* NAVBAR */}
-      <Navbar
-        toggleSidebar={() => setOpenSidebar(!openSidebar)}
-        student={student}
-        onLogout={onLogout}
-      />
-
-      {/* WRAPPER */}
-      <div className="flex flex-1 pt-16">
-
-        {/* SIDEBAR */}
-        <Sidebar open={openSidebar} />
-
-        {/* MAIN CONTENT */}
-        <main
-          className={`flex-1 py-8 px-24 bg-gray-100 transition-all duration-300
-            ${openSidebar ? "ml-64" : "ml-0"}
-          `}
-        >
-          <Outlet />
-        </main>
-      </div>
+      {/* MAIN CONTENT */}
+      <main className="flex-1 pt-20 px-24 bg-gray-100 transition-all duration-300">
+        <Outlet />
+      </main>
     </div>
   );
 }
