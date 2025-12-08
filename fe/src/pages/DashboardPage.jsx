@@ -2,18 +2,28 @@ import React, { useEffect, useState, useContext } from "react";
 import StatsCard from "../components/StatsCard";
 import Charts from "../components/Charts";
 import { FaGraduationCap } from "react-icons/fa6";
+import { getDailyProgress } from "../api/studentApi";
 /* components */
 import LearningStyle from "../components/LearningStyle";
 import { AppContext } from "../contexts/contexts";
 
 const Dashboard = ({ data }) => {
 	const { name, learning_style } = useContext(AppContext);
+	const [dailyProgress, setDailyProgress] = useState({
+		percentage: 0,
+		student_id: 0,
+		target_hours: 0,
+		time_spent_hours: 0,
+	});
 	const formatTime = (minutes) => {
 		const hours = Math.floor(minutes / 60);
 		const mins = minutes % 60;
 		return `${hours}h ${mins}m`;
 	};
-
+	useEffect(() => {
+		const d = getDailyProgress();
+		setDailyProgress(d.percentage);
+	}, []);
 	return (
 		<div className="flex-1 pr-8 py-1 pl-0 border-0">
 			{/* HEADER */}

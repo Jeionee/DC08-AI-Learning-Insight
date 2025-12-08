@@ -18,7 +18,7 @@ def create_app():
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=15)  # 15 minutes expiry
 
     # Initialize extensions
-    CORS(app)
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     bcrypt.init_app(app)
     db.init_app(app)
     jwt.init_app(app)
