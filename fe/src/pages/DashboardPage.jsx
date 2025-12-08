@@ -1,117 +1,86 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import StatsCard from "../components/StatsCard";
 import Charts from "../components/Charts";
-import Recommendations from "../components/Recommendation";
-import ModuleProgress from "../components/ModuleProgress";
-import axios from "axios";
+import { FaGraduationCap } from "react-icons/fa6";
+/* components */
+import LearningStyle from "../components/LearningStyle";
+import { AppContext } from "../contexts/contexts";
 
 const Dashboard = ({ data }) => {
-  const [student, setStudent] = useState([]);
-  const formatTime = (minutes) => {
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    return `${hours}h ${mins}m`;
-  };
+	const { name, learning_style } = useContext(AppContext);
+	const formatTime = (minutes) => {
+		const hours = Math.floor(minutes / 60);
+		const mins = minutes % 60;
+		return `${hours}h ${mins}m`;
+	};
 
-  useEffect(() => {
-    const getData = async () => {
-      const res = await axios.get("http://localhost:5000/students/2401");
-      setStudent(res.data.data);
-    };
+	return (
+		<div className="flex-1 pr-8 py-1 pl-0 border-0">
+			{/* HEADER */}
+			<div className="mb-8">
+				<h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+				<p className="text-gray-600 my-3">
+					Selamat datang kembali, <b>{name}</b> ! Mari lanjutkan pembelajaranmu.
+				</p>
+			</div>
 
-    getData();
-  }, []);
+			{/* TOP CARDS */}
+			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+				{/* TIME SPENT LEARNING */}
+				<div className="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 border border-gray-100 relative">
+					<h3 className="text-gray-600 text-sm font-medium mb-2">Time Spent Learning</h3>
 
-  const learningStyles = {
-    consistent: {
-      name: "Consistent Learner",
-      description: "You learn best with regular, structured study sessions",
-      color: "bg-green-100 text-green-800 border-green-200",
-      badgeColor: "bg-green-500",
-    },
-    fast: {
-      name: "Fast Learner",
-      description:
-        "You quickly grasp new concepts and prefer accelerated learning",
-      color: "bg-amber-100 text-amber-800 border-amber-200",
-      badgeColor: "bg-amber-500",
-    },
-    reflective: {
-      name: "Reflective Learner",
-      description:
-        "You prefer to think deeply and reflect on what you've learned",
-      color: "bg-purple-100 text-purple-800 border-purple-200",
-      badgeColor: "bg-purple-500",
-    },
-  };
+					<div className="text-4xl font-bold text-gray-900 mb-1">
+						{formatTime(data.progress.timeSpentToday)}
+					</div>
 
-  return (
-    <div className="flex-1 pr-8 py-8 pl-0 border-2 border-red-500">
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <StatsCard
-          title={`Progress Modul ${data.progress.moduleName || "JavaScript"}`}
-          value={`${data.progress.courseCompletion}%`}
-          subtitle={`+${data.progress.growth || 10}% dari bulan lalu`}
-          progress={data.progress.courseCompletion}
-          color="blue"
-          description={`Total modul selesai: ${
-            data.progress.completedModules || 5
-          }/${data.progress.totalModules || 8}`}
-        />
+					<p className="text-gray-600 text-sm mb-4">Hari ini</p>
 
-        <StatsCard
-          title="Time Spent Learning"
-          value={formatTime(data.progress.timeSpentToday)}
-          subtitle="Today"
-          progress={
-            (data.progress.timeSpentToday / data.progress.dailyGoal) * 100
-          }
-          color="teal"
-          footer={`Daily Goal: ${formatTime(data.progress.dailyGoal)}`}
-        />
+					{/* Progress Bar */}
+					<div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden mb-3">
+						<div
+							className="bg-blue-600 h-2"
+							style={{
+								width: `${(data.progress.timeSpentToday / data.progress.dailyGoal) * 100}%`,
+							}}
+						></div>
+					</div>
 
-        {/* Learning Style Card */}
-        <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
-          <h3 className="text-gray-500 text-sm font-medium mb-4">
-            Learning Style
-          </h3>
-          <div className="text-xl font-bold text-gray-900 mb-2">
-            {learningStyles[data.user.learningStyle].name}
-          </div>
-          <p className="text-gray-600 text-sm mb-4">
-            {learningStyles[data.user.learningStyle].description}
-          </p>
-          <div className="flex space-x-2">
-            {Object.entries(learningStyles).map(([key, style]) => (
-              <span
-                key={key}
-                className={`px-3 py-1 rounded-full text-xs font-medium border ${
-                  key === student.image_path
-                    ? style.color
-                    : "bg-gray-100 text-gray-600 border-gray-200"
-                }`}
-              >
-                {style.name.split(" ")[0]}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
+					<div className="flex justify-between text-sm text-gray-600">
+						<span>Target harian: {formatTime(data.progress.dailyGoal)}</span>
+						<span>
+							{Math.floor((data.progress.timeSpentToday / data.progress.dailyGoal) * 100)}%
+						</span>
+					</div>
 
-      {/* Charts Section */}
-      <Charts
-        weeklyActivity={data.weeklyActivity}
-        learningDistribution={data.learningDistribution}
-      />
+					{/* BULAT INFO */}
+					<div
+						className="
+              absolute right-6 top-6
+              w-24 h-24 rounded-full
+              bg-blue-50 border border-blue-200
+              flex flex-col justify-center items-center
+              text-center
+            "
+					>
+						<span className="text-xl font-bold text-blue-800">
+							{data.progress.averageDailyHours}3.6/hari
+						</span>
+						<span className="text-[11px] text-blue-700">Rata-rata jam belajar</span>
+					</div>
+				</div>
 
-      {/* Recommendations Section */}
-      <Recommendations recommendations={data.recommendations} />
+				{/* LEARNING STYLE */}
+				<LearningStyle learning_style={learning_style} />
+			</div>
 
-      {/* Module Progress Section */}
-      <ModuleProgress modules={data.modules} />
-    </div>
-  );
+			{/* CHARTS */}
+			<Charts
+				weeklyActivity={data.weeklyActivity}
+				learningDistribution={data.learningDistribution}
+			/>
+		</div>
+	);
 };
 
 export default Dashboard;

@@ -1,154 +1,178 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-
-import ForgotPasswordPage from "./pages/ForgotPasswordPage"; // Import halaman Forgot Password
-import DashboardLayout from "./layout/DashboardLayout";
-import Dashboard from "./components/Dashboard";
-import Profile from "./pages/Profile";
-import LoginPage from "./pages/LoginPage";
+import React, { useState, useEffect, use } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { AppContext } from "./contexts/contexts";
+import { getStudent } from "./api/studentApi";
+/* layouts */
+import StudentsLayout from "./layouts/StudentsLayout";
+/* pages */
+import Dashboard from "./pages/DashboardPage";
+import ProfilePage from "./pages/ProfilePage";
+import Login from "./pages/LoginPage";
+import ProgressPage from "./pages/ProgressPage";
+import RecommendationPage from "./pages/RecommendationPage";
+import ChallengesPage from "./pages/ChallengesPage";
 
 const App = () => {
-  const [learningData, setLearningData] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [learningData, setLearningData] = useState(null);
+	const [isLoggedIn, setIsLoggedIn] = useState(null);
+	const [student, setStudent] = useState({
+		name: "",
+		email: "",
+		learning_style: "",
+		joined_since: "",
+	});
 
-  // Simulasi data (mock)
-  useEffect(() => {
-    const mockData = {
-      user: {
-        name: "John Smith",
-        learningStyle: "consistent",
-        avatar: "JS",
-      },
-      progress: {
-        courseCompletion: 75,
-        timeSpentToday: 205,
-        dailyGoal: 300,
-        weeklyProgress: 15,
-      },
-      weeklyActivity: [
-        { day: "Mon", hours: 2.5, goal: 5 },
-        { day: "Tue", hours: 3, goal: 5 },
-        { day: "Wed", hours: 4, goal: 5 },
-        { day: "Thu", hours: 2.5, goal: 5 },
-        { day: "Fri", hours: 3.5, goal: 5 },
-        { day: "Sat", hours: 1.5, goal: 5 },
-        { day: "Sun", hours: 2, goal: 5 },
-      ],
-      learningDistribution: [
-        { name: "HTML/CSS", value: 30, color: "#4361ee" },
-        { name: "JavaScript", value: 25, color: "#4cc9f0" },
-        { name: "React", value: 20, color: "#3f37c9" },
-        { name: "Accessibility", value: 15, color: "#7209b7" },
-        { name: "Other", value: 10, color: "#f72585" },
-      ],
-      recommendations: [
-        {
-          id: 1,
-          title: "Advanced CSS Techniques",
-          description: "Elevate your styling skills with advanced CSS concepts.",
-          progress: 30,
-          icon: "HTML",
-          category: "Design",
-        },
-        {
-          id: 2,
-          title: "React State Management",
-          description: "Master complex application states in React.",
-          progress: 65,
-          icon: "CSS",
-          category: "Development",
-        },
-        {
-          id: 3,
-          title: "Web Accessibility Basics",
-          description: "Build inclusive web experiences for all users.",
-          progress: 0,
-          icon: "JS",
-          category: "Best Practices",
-        },
-      ],
-      modules: [
-        {
-          id: 1,
-          title: "HTML & CSS Fundamentals",
-          progress: 85,
-          assessments: [
-            { name: "Quiz 1", score: 92 },
-            { name: "Assignment", score: 88 },
-            { name: "Final Test", score: 85 },
-          ],
-        },
-        {
-          id: 2,
-          title: "JavaScript Basics",
-          progress: 70,
-          assessments: [
-            { name: "Quiz 1", score: 78 },
-            { name: "Assignment", score: 82 },
-            { name: "Final Test", score: null },
-          ],
-        },
-        {
-          id: 3,
-          title: "Responsive Web Design",
-          progress: 45,
-          assessments: [
-            { name: "Quiz 1", score: 90 },
-            { name: "Assignment", score: null },
-            { name: "Final Test", score: null },
-          ],
-        },
-      ],
-    };
+	useEffect(() => {
+		async function fetchStudent() {
+			const s = await getStudent();
+			setStudent({
+				name: s.name,
+				email: s.email,
+				learning_style: s.learning_style,
+				joined_since: s.joined_since,
+			});
+		}
+		fetchStudent();
+	}, []);
+	// cek token dilocalstorage saat refresh
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		setIsLoggedIn(!!token);
+	}, []);
 
-    setLearningData(mockData);
-  }, []);
+	// Simulasi data (mock)
+	useEffect(() => {
+		const mockData = {
+			user: {
+				name: "John Smith",
+				learningStyle: "consistent",
+				avatar: "JS",
+			},
+			progress: {
+				courseCompletion: 75,
+				timeSpentToday: 205,
+				dailyGoal: 300,
+				weeklyProgress: 15,
+			},
+			weeklyActivity: [
+				{ day: "Mon", hours: 2.5, goal: 5 },
+				{ day: "Tue", hours: 3, goal: 5 },
+				{ day: "Wed", hours: 4, goal: 5 },
+				{ day: "Thu", hours: 2.5, goal: 5 },
+				{ day: "Fri", hours: 3.5, goal: 5 },
+				{ day: "Sat", hours: 1.5, goal: 5 },
+				{ day: "Sun", hours: 2, goal: 5 },
+			],
+			learningDistribution: [
+				{ name: "HTML/CSS", value: 30, color: "#4361ee" },
+				{ name: "JavaScript", value: 25, color: "#4cc9f0" },
+				{ name: "React", value: 20, color: "#3f37c9" },
+				{ name: "Accessibility", value: 15, color: "#7209b7" },
+				{ name: "Other", value: 10, color: "#f72585" },
+			],
+			recommendations: [
+				{
+					id: 1,
+					title: "Advanced CSS Techniques",
+					description: "Elevate your styling skills with advanced CSS concepts.",
+					progress: 30,
+					icon: "HTML",
+					category: "Design",
+				},
+				{
+					id: 2,
+					title: "React State Management",
+					description: "Master complex application states in React.",
+					progress: 65,
+					icon: "CSS",
+					category: "Development",
+				},
+				{
+					id: 3,
+					title: "Web Accessibility Basics",
+					description: "Build inclusive web experiences for all users.",
+					progress: 0,
+					icon: "JS",
+					category: "Best Practices",
+				},
+			],
+			modules: [
+				{
+					id: 1,
+					title: "HTML & CSS Fundamentals",
+					progress: 85,
+					assessments: [
+						{ name: "Quiz 1", score: 92 },
+						{ name: "Assignment", score: 88 },
+						{ name: "Final Test", score: 85 },
+					],
+				},
+				{
+					id: 2,
+					title: "JavaScript Basics",
+					progress: 70,
+					assessments: [
+						{ name: "Quiz 1", score: 78 },
+						{ name: "Assignment", score: 82 },
+						{ name: "Final Test", score: null },
+					],
+				},
+				{
+					id: 3,
+					title: "Responsive Web Design",
+					progress: 45,
+					assessments: [
+						{ name: "Quiz 1", score: 90 },
+						{ name: "Assignment", score: null },
+						{ name: "Final Test", score: null },
+					],
+				},
+			],
+		};
 
-  if (!learningData) {
-    return <div>Loading...</div>;
-  }
+		setLearningData(mockData);
+	}, []);
 
-  return (
-    <Router>
-      <Routes>
+	if (!learningData || isLoggedIn === null) {
+		return <div>Loading...</div>;
+	}
 
-        {/* LOGIN */}
-        <Route
-          path="/login"
-          element={
-            isLoggedIn ? (
-              <Navigate to="/dashboard" replace />
-            ) : (
-              <LoginPage onLogin={() => setIsLoggedIn(true)} />
-            )
-          }
-        />
+	return (
+		<AppContext.Provider value={student}>
+			<Routes>
+				{/* LOGIN */}
+				<Route
+					path="/login"
+					element={
+						isLoggedIn ? (
+							<Navigate to="/dashboard" replace />
+						) : (
+							<Login onLogin={() => setIsLoggedIn(true)} />
+						)
+					}
+				/>
 
-        {/* FORGOT PASSWORD */}
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-
-        {/* PROTECTED ROUTES */}
-        <Route
-          path="/"
-          element={
-            isLoggedIn ? (
-              <DashboardLayout
-                student={learningData.user}
-                onLogout={() => setIsLoggedIn(false)}
-              />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        >
-          <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="dashboard" element={<Dashboard data={learningData} />} />
-          <Route path="profile" element={<Profile user={learningData.user} />} />
-        </Route>
-
-      </Routes>
-    </Router>
-  );
+				{/* PROTECTED ROUTES */}
+				<Route
+					path="/"
+					element={
+						isLoggedIn ? (
+							<StudentsLayout student={learningData.user} onLogout={() => setIsLoggedIn(false)} />
+						) : (
+							<Navigate to="/login" replace />
+						)
+					}
+				>
+					<Route index element={<Navigate to="/dashboard" replace />} />
+					<Route path="dashboard" element={<Dashboard data={learningData} />} />
+					<Route path="profile" element={<ProfilePage user={learningData.user} />} />
+					<Route path="progress" element={<ProgressPage />} />
+					<Route path="recommendation" element={<RecommendationPage />} />
+					<Route path="challenges" element={<ChallengesPage />} />
+				</Route>
+			</Routes>
+		</AppContext.Provider>
+	);
 };
 
 export default App;
