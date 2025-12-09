@@ -143,44 +143,35 @@ const App = () => {
 					}
 				/>
 
-        {/* PROTECTED ROUTES */}
-        <Route
-          path="/"
-          element={
-            isLoggedIn ? (
-              <StudentsLayout
-                student={learningData.user}
-                onLogout={() => setIsLoggedIn(false)}
-              />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        >
-          <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="dashboard" element={<Dashboard data={learningData} />} />
-          <Route
-            path="profile"
-            element={<ProfilePage user={learningData.user} />}
-          />
-          <Route
-            path="progress"
-            element={
-              <ProgressPage
-                progress={learningData.progress}
-                modules={learningData.modules}
-              />
-            }
-          />
-          <Route path="module" element={<ModulePage />} />
-          <Route path="/module/:moduleId" element={<ModuleDetail />} />
-          <Route path="/all-modules" element={<AllModules />} />
-          <Route path="recommendation" element={<RecommendationPage />} />
-          <Route path="challenges" element={<ChallengesPage />} />
-        </Route>
-      </Routes>
-    </AppContext.Provider>
-  );
+				{/* PROTECTED ROUTES */}
+				<Route
+					path="/"
+					element={
+						isLoggedIn ? (
+							<StudentsLayout student={learningData.user} onLogout={() => setIsLoggedIn(false)} />
+						) : (
+							<Navigate to="/login" replace />
+						)
+					}
+				>
+					<Route index element={<Navigate to="/dashboard" replace />} />
+					<Route path="dashboard" element={<Dashboard data={learningData} />} />
+					<Route path="profile" element={<ProfilePage user={learningData.user} />} />
+					<Route
+						path="progress"
+						element={
+							<ProgressPage progress={learningData.progress} modules={learningData.modules} />
+						}
+					/>
+					<Route path="module" element={<ModulePage />} />
+					<Route path="/module/:moduleId" element={<ModuleDetail />} />
+					<Route path="/all-modules" element={<AllModules />} />
+					<Route path="recommendation" element={<RecommendationPage />} />
+					<Route path="challenges" element={<ChallengesPage />} />
+				</Route>
+			</Routes>
+		</AppContextProvider>
+	);
 };
 
 export default App;
