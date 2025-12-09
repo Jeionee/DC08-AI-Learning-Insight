@@ -1,38 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getStudent } from "../api/studentApi";
 import dateFormatter from "../utils/dateFormatter";
+import { useContext } from "react";
+import { AppContext } from "../contexts/contexts";
 
 export default function ProfilePage({ user }) {
-	const [student, setStudent] = useState(null);
+	const { student } = useContext(AppContext);
 	const [isEditing, setIsEditing] = useState(false);
-	const [formData, setFormData] = useState({
-		name: "",
-		email: "",
-		learning_style: "",
-		avatar: null,
-		joined_since: "",
-	});
-
-	useEffect(() => {
-		async function fetchData() {
-			try {
-				const data = await getStudent();
-				setStudent(data);
-
-				setFormData({
-					name: data.name,
-					email: data.email,
-					learning_style: data.learning_style,
-					avatar: data.photo_profile,
-					joined_since: data.joined_since,
-				});
-			} catch (error) {
-				console.error("Gagal mengambil data:", error);
-			}
-		}
-
-		fetchData();
-	}, []);
 
 	if (!student) {
 		return <p className="p-6 text-gray-600">Loading...</p>;
