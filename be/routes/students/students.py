@@ -114,4 +114,26 @@ def get_weekly_progress():
         return jsonify(progress), 200
 
     except Exception as e:
-        return jsonify({"message": f"An error occurred: {str(e)}"}), 500    
+        return jsonify({"message": f"An error occurred: {str(e)}"}), 500
+
+@students_bp.route("/daily-progress", methods=["GET"])
+@jwt_required()
+def get_daily_progress():
+    try:
+        student_id = get_jwt_identity()
+        if not student_id:
+            return jsonify({"message": "Invalid token"}), 401
+
+        try:
+            student_id = int(student_id)
+        except ValueError:
+            return jsonify({"message": "Invalid student ID in token"}), 401
+
+        progress, error = TrackingService.get_daily_learning_progress(student_id)
+        if error:
+            return jsonify({"message": error}), 404
+
+        return jsonify(progress), 200
+
+    except Exception as e:
+        return jsonify({"message": f"An error occurred: {str(e)}"}), 500
