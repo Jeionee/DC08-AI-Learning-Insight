@@ -8,7 +8,7 @@ export default function StudentsLayout({ onLogout }) {
       <Navbar onLogout={onLogout} />
 
       {/* MAIN CONTENT */}
-      <main className="flex-1 pt-20 px-24 bg-gray-100 transition-all duration-300">
+      <main className="flex-1 bg-gray-100 transition-all duration-300">
         <Outlet />
       </main>
     </div>

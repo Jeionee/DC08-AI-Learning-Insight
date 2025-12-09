@@ -1,101 +1,189 @@
-// Navbar.jsx (Final Version Without Sidebar)
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useRef, useEffect, useContext } from "react";
-import { CgProfile } from "react-icons/cg";
-import { IoIosLogOut } from "react-icons/io";
-import { FiChevronDown } from "react-icons/fi";
+import { User, LogOut, ChevronDown, BookOpen, BarChart2, LayoutDashboard, Settings } from "lucide-react";
 import { AppContext } from "../contexts/contexts";
 
 export default function Navbar({ onLogout }) {
-	const [open, setOpen] = useState(false);
-	const dropdownRef = useRef(null);
-	const navigate = useNavigate();
-	const { student } = useContext(AppContext);
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { student } = useContext(AppContext);
 
-	const handleLogout = () => {
-		onLogout();
-		localStorage.removeItem("token");
-		navigate("/login");
-	};
+  // --- LOGIKA MENYEMBUNYIKAN NAVBAR ---
+  // Masukkan path/url di mana kamu TIDAK ingin Navbar muncul
+  const hiddenPaths = [
+    "/login", 
+    "/register", 
+    "/forgot-password", 
+    "/", // Jika halaman awal adalah landing page/login
+    // "/module-detail" // Tambahkan jika ingin sembunyi di detail modul
+  ];
 
-	useEffect(() => {
-		const handleClickOutside = (e) => {
-			if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-				setOpen(false);
-			}
-		};
-		document.addEventListener("mousedown", handleClickOutside);
-		return () => document.removeEventListener("mousedown", handleClickOutside);
-	}, []);
+  // Jika path saat ini ada di dalam list hiddenPaths, jangan render apa-apa (return null)
+  if (hiddenPaths.includes(location.pathname)) {
+    return null;
+  }
+  // ------------------------------------
 
-	return (
-		<div className="w-full h-16 bg-white shadow fixed top-0 left-0 z-50 flex items-center px-10">
-			{/* LOGO */}
-			<h1 className="text-2xl font-bold text-gray-800 mr-10 select-none">LeanSmart</h1>
+  const handleLogout = () => {
+    onLogout();
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
-			{/* CENTER NAVIGATION */}
-			<div className="flex space-x-12 text-gray-700 font-medium text-lg ml-48 mr-auto">
-				<Link
-					to="/dashboard"
-					className="opacity-60 hover:opacity-100 hover:text-black transition relative group"
-				>
-					Dashboard
-					<span className="absolute left-0 -bottom-1 w-full h-0.5 bg-slate-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-				</Link>
-				<Link
-					to="/progress"
-					className="opacity-60 hover:opacity-100 hover:text-black transition relative group"
-				>
-					Progress
-					<span className="absolute left-0 -bottom-1 w-full h-0.5 bg-slate-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-				</Link>
-				<Link
-					to="/module"
-					className="opacity-60 hover:opacity-100 hover:text-black transition relative group"
-				>
-					Module
-					<span className="absolute left-0 -bottom-1 w-full h-0.5 bg-slate-500 scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-				</Link>
-			</div>
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-			{/* PROFILE DROPDOWN */}
-			<div className="relative" ref={dropdownRef}>
-				<div
-					className="flex items-center space-x-3 cursor-pointer hover:bg-gray-100 p-2 rounded-full transition"
-					onClick={() => setOpen(!open)}
-				>
-					<div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
-						{student.name && student.name[0]}
-					</div>
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-					<span className="text-gray-700 font-medium">{student.name}</span>
+  const getInitials = (name) => name ? name.charAt(0).toUpperCase() : "U";
+  const isActive = (path) => location.pathname === path;
 
-					<FiChevronDown
-						className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-					/>
-				</div>
+  return (
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${
+        scrolled
+          ? "bg-indigo-900/95 backdrop-blur-md shadow-lg py-3" // SCROLL: Ungu Gelap
+          : "bg-white border-b border-slate-100 py-5"          // TOP: Putih Bersih
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
+        
+        {/* --- 1. LOGO --- */}
+        <Link to="/dashboard" className="flex items-center gap-2 group">
+          <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold shadow-lg transition-colors duration-300 ${
+            scrolled ? "bg-white text-indigo-900" : "bg-indigo-600 text-white shadow-indigo-200"
+          }`}>
+            L
+          </div>
+          <span className={`text-xl font-extrabold tracking-tight transition-colors duration-300 ${
+            scrolled ? 'text-white' : 'text-slate-800'
+          }`}>
+            LeanSmart
+          </span>
+        </Link>
 
-				{/* DROPDOWN */}
-				<div
-					className={`absolute right-0 mt-3 w-52 bg-white border rounded-xl shadow-lg transition-all duration-200 origin-top-right ${
-						open ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"
-					}`}
-				>
-					<Link
-						to="/profile"
-						className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition"
-					>
-						<CgProfile size={20} className="mr-3" /> Your Profile
-					</Link>
+        {/* --- 2. CENTER NAVIGATION --- */}
+        <div className={`hidden md:flex items-center space-x-1 p-1 rounded-full border transition-all duration-300 ${
+          scrolled ? "bg-white/10 border-white/10" : "bg-slate-100 border-slate-200"
+        }`}>
+          {[
+            { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
+            { name: "Progress", path: "/progress", icon: BarChart2 },
+            { name: "Module", path: "/module", icon: BookOpen },
+          ].map((item) => {
+            const active = isActive(item.path);
+            const Icon = item.icon;
+            
+            // Logic Warna Tombol
+            let buttonClass = "";
+            if (scrolled) {
+              // Mode Scroll (Background Gelap)
+              buttonClass = active 
+                ? "bg-white text-indigo-900 shadow-md" 
+                : "text-indigo-200 hover:text-white hover:bg-white/10";
+            } else {
+              // Mode Top (Background Putih)
+              buttonClass = active 
+                ? "bg-white text-indigo-600 shadow-sm border border-slate-100" 
+                : "text-slate-500 hover:text-slate-900 hover:bg-slate-200/50";
+            }
 
-					<button
-						className="flex items-center w-full text-left px-4 py-3 text-red-500 hover:bg-gray-100 hover:text-red-600 transition rounded-b-xl"
-						onClick={handleLogout}
-					>
-						<IoIosLogOut size={20} className="mr-3" /> Logout
-					</button>
-				</div>
-			</div>
-		</div>
-	);
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${buttonClass}`}
+              >
+                <Icon size={16} />
+                {item.name}
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* --- 3. PROFILE DROPDOWN --- */}
+        <div className="relative" ref={dropdownRef}>
+          <button
+            onClick={() => setOpen(!open)}
+            className={`flex items-center gap-3 pl-2 pr-4 py-1.5 rounded-full transition-all border ${
+              scrolled 
+                ? "bg-white/10 border-white/20 hover:bg-white/20 text-white" 
+                : "bg-slate-50 border-slate-200 hover:bg-slate-100 text-slate-700"
+            }`}
+          >
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 p-[2px]">
+              <div className="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
+                {student.photo_profile ? (
+                  <img src={student.photo_profile} alt="Avatar" className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-indigo-700 font-bold text-xs">{getInitials(student.name)}</span>
+                )}
+              </div>
+            </div>
+            
+            <span className="text-sm font-semibold max-w-[100px] truncate hidden sm:block">
+              {student.name || "Student"}
+            </span>
+            
+            <ChevronDown size={16} className={`transition-transform duration-300 ${open ? "rotate-180" : ""} opacity-70`} />
+          </button>
+
+          {/* Dropdown Menu */}
+          <div
+            className={`absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden transform transition-all duration-200 origin-top-right ${
+              open ? "scale-100 opacity-100 translate-y-0" : "scale-95 opacity-0 -translate-y-2 pointer-events-none"
+            }`}
+          >
+            <div className="px-4 py-4 border-b border-slate-50 bg-slate-50/50">
+              <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Signed in as</p>
+              <p className="text-sm font-bold text-slate-800 truncate">{student.email || "student@example.com"}</p>
+            </div>
+
+            <div className="p-2 space-y-1">
+              <Link
+                to="/profile"
+                className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 rounded-xl hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                onClick={() => setOpen(false)}
+              >
+                <User size={18} /> Profile
+              </Link>
+              <Link
+                to="/settings"
+                className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 rounded-xl hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
+                onClick={() => setOpen(false)}
+              >
+                <Settings size={18} /> Settings
+              </Link>
+            </div>
+
+            <div className="p-2 border-t border-slate-50">
+              <button
+                onClick={handleLogout}
+                className="flex w-full items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-600 rounded-xl hover:bg-red-50 transition-colors"
+              >
+                <LogOut size={18} /> Logout
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </nav>
+  );
 }
