@@ -11,17 +11,17 @@ import {
 } from "recharts";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 
-const Charts = () => {
+const Charts = ({ weeklyActivity}) => {
   // Data Dummy - Aktivitas Mingguan
-  const weeklyActivity = [
-    { day: "Senin", hours: 3, goal: 4 },
-    { day: "Selasa", hours: 2, goal: 4 },
-    { day: "Rabu", hours: 5, goal: 4 },
-    { day: "Kamis", hours: 4, goal: 4 },
-    { day: "Jumat", hours: 6, goal: 4 },
-    { day: "Sabtu", hours: 2, goal: 4 },
-    { day: "Minggu", hours: 3, goal: 4 },
-  ];
+  // const weeklyActivity = [
+  //   { day: "Senin", hours: 3, goal: 4 },
+  //   { day: "Selasa", hours: 2, goal: 4 },
+  //   { day: "Rabu", hours: 5, goal: 4 },
+  //   { day: "Kamis", hours: 4, goal: 4 },
+  //   { day: "Jumat", hours: 6, goal: 4 },
+  //   { day: "Sabtu", hours: 2, goal: 4 },
+  //   { day: "Minggu", hours: 3, goal: 4 },
+  // ];
 
   // Data Dummy - Nilai Kuis
   const quizScores = [
