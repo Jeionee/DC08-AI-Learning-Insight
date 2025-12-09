@@ -94,8 +94,12 @@ export default function ProgressPage({ progress, modules }) {
                   className={`text-3xl font-bold mb-2 ${
                     module.progress < 40
                       ? "text-red-500"
-                      : module.progress < 70
+                      : module.progress < 60
                       ? "text-yellow-500"
+                      : module.progress < 80
+                      ? "text-blue-600"
+                      : module.progress < 100
+                      ? "text-blue-700"
                       : "text-green-600"
                   }`}
                 >
@@ -106,9 +110,13 @@ export default function ProgressPage({ progress, modules }) {
                     className={`h-2 ${
                       module.progress < 40
                         ? "bg-red-500"
-                        : module.progress < 70
+                        : module.progress < 60
                         ? "bg-yellow-500"
-                        : "bg-green-600"
+                        : module.progress < 80
+                        ? "bg-blue-600"
+                        : module.progress < 100
+                        ? "bg-blue-700"
+                        : "bg-blue-700"
                     }`}
                     style={{ width: `${module.progress}%` }}
                   ></div>
@@ -118,35 +126,45 @@ export default function ProgressPage({ progress, modules }) {
                   <p className="font-semibold text-gray-600 mb-2">
                     Assessments:
                   </p>
-                  {module.assessments.map((a, idx) => (
-                    <div
-                      key={idx}
-                      className="bg-gray-100 px-3 py-2 rounded-lg text-sm flex-1 min-w-[120px]"
-                    >
-                      <span className="font-semibold">{a.name}:</span>
-                      {""}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {module.assessments.map((a, idx) => {
+                      let scoreColor = "";
+                      if (a.score === null)
+                        scoreColor = "bg-blue-50 text-gray-400";
+                      else if (a.score >= 85)
+                        scoreColor = "bg-blue-200 text-blue-600";
+                      else if (a.score >= 70)
+                        scoreColor = "bg-yellow-100 text-yellow-700";
+                      else scoreColor = "bg-red-100 text-red-700";
 
-                      {a.score !== null ? (
-                        a.score
-                      ) : (
-                        <span className="text-gray-400">Not completed</span>
-                      )}
-                    </div>
-                  ))}
+                      return (
+                        <div
+                          key={idx}
+                          className={`flex justify-between items-center px-3 py-2 rounded-lg text-sm font-medium ${scoreColor}`}
+                        >
+                          <span>{a.name}</span>
+                          <span>
+                            {a.score !== null ? `${a.score}%` : "Not completed"}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
 
               {/* SUMMARY CARD */}
-              <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 w-1/3 flex flex-col justify-center">
+              {/* SUMMARY CARD */}
+              <div className="bg-gradient-to-br from-white via-blue-50 to-blue-100 rounded-2xl shadow-lg p-6 border border-gray-100 w-1/3 flex flex-col justify-center hover:scale-105 transition-transform duration-300">
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="p-4 bg-blue-100 text-blue-600 rounded-full">
-                    <summary.icon className="text-3xl" />
+                  <div className="p-5 bg-blue-200 text-blue-700 rounded-full shadow-md">
+                    <summary.icon className="text-4xl" />
                   </div>
                   <h3 className="text-gray-700 font-semibold text-xl">
                     {summary.title}
                   </h3>
                 </div>
-                <div className="text-4xl font-bold text-gray-900">
+                <div className="text-5xl font-bold text-gray-900 mb-1">
                   {summary.value}
                 </div>
                 <p className="text-gray-600 text-base">{summary.subtitle}</p>
