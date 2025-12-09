@@ -16,12 +16,9 @@ export default function Login({ onLogin }) {
 			setError("Email dan password wajib diisi");
 			return;
 		}
-
 		try {
-			// Panggil API login dari file lain
 			const data = await loginRequest(email, password);
 
-			// Ambil token dan user
 			localStorage.setItem("token", data.token);
 
 			onLogin();
