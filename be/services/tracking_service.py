@@ -98,3 +98,37 @@ class TrackingService:
             "target_met_days": target_met_days,
             "week_change": round(week_change, 2)
         }, None
+        
+    @staticmethod
+    def get_daily_learning_progress(student_id, target_hours=5.0):
+        # Calculate the start and end dates for the past week
+        end_date = datetime.today()
+        start_date = end_date - timedelta(days=7)
+        
+        # Fetch tracking data grouped by day
+        sessions = TrackingRepository.get_sessions_by_day(student_id, start_date, end_date)
+        if not sessions:
+            return {
+                "student_id": student_id,
+                "daily_progress": [],
+                "target_hours": target_hours
+            }, None
+        
+        # Aggregate data for each day
+        daily_progress = []
+        for session in sessions:
+            day_of_week = session.date.strftime("%A")  # Convert date to day name
+            total_hours = session.total_hours
+            
+            # Store the day of the week and hours spent
+            daily_progress.append({
+                "day": day_of_week,
+                "hours_spent": round(total_hours, 2),
+                "target": target_hours
+            })
+        
+        return {
+            "student_id": student_id,
+            "daily_progress": daily_progress,
+            "target_hours": target_hours
+        }, None

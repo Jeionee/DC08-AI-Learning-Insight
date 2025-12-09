@@ -1,5 +1,7 @@
 from models.tracking import Tracking
-from datetime import date
+from datetime import date, timedelta
+from sqlalchemy import func
+from utils.extensions import db
 
 class TrackingRepository:
     @staticmethod
@@ -22,3 +24,17 @@ class TrackingRepository:
             Tracking.first_opened_at >= start_date,
             Tracking.last_viewed <= end_date
         ).all()
+        
+    @staticmethod
+    def get_sessions_by_day(student_id, start_date, end_date):
+        # Menghitung durasi dalam jam antara first_opened_at dan last_viewed
+        return db.session.query(
+            func.date(Tracking.first_opened_at).label('date'),
+            func.sum(
+                (func.timestamp(Tracking.last_viewed) - func.timestamp(Tracking.first_opened_at)) / 3600  # Menghitung durasi dalam jam
+            ).label('total_hours')
+        ).filter(
+            Tracking.developer_id == student_id,
+            Tracking.first_opened_at >= start_date,
+            Tracking.last_viewed <= end_date
+        ).group_by(func.date(Tracking.first_opened_at)).all()
