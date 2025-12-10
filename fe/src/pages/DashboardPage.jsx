@@ -68,7 +68,7 @@ const Dashboard = ({ data }) => {
           <div className="flex flex-col md:flex-row justify-between items-end gap-6">
             <div>
               <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-2 leading-tight">
-                Selamat Datang, <br/>
+                <br/> Selamat Datang, <br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-indigo-200">
                   {student.name?.split(" ")[0]}!
                 </span> 👋
