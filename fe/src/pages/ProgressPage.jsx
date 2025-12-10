@@ -39,6 +39,7 @@ export default function ProgressPage({ progress, modules }) {
     },
   ];
 
+
   const completedModules = dummyModules.filter((m) => m.progress === 100).length;
   const totalModules = dummyModules.length;
   const totalHours = Math.floor(dummyProgress.timeSpentToday / 60);
@@ -49,10 +50,10 @@ export default function ProgressPage({ progress, modules }) {
     <div className="min-h-screen bg-[#F8FAFC] font-sans selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden relative">
       
       {/* --- BACKGROUND DECORATION --- */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-100/40 rounded-full blur-3xl -z-10 -translate-y-1/2 translate-x-1/4"></div>
-      <div className="absolute top-40 left-0 w-[300px] h-[300px] bg-blue-100/30 rounded-full blur-3xl -z-10 -translate-x-1/4"></div>
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-indigo-100/40 rounded-full blur-3xl -z-10 -translate-x-1/4 -translate-y-1/4"></div>
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-100/30 rounded-full blur-3xl -z-10 translate-x-1/4 translate-y-1/4"></div>
 
-      <div className="max-w-6xl mx-auto px-6 lg:px-12 pt-28 pb-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-28 pb-20">
         
         {/* --- HEADER --- */}
         <div className="mb-12 relative">
