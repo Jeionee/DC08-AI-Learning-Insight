@@ -50,7 +50,7 @@ export default function Login({ onLogin }) {
           </div>
 
           <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2">Welcome Back! 👋</h1>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2">Welcome Back!</h1>
             <p className="text-slate-500">Masuk untuk melanjutkan perjalanan belajarmu.</p>
           </div>
 
