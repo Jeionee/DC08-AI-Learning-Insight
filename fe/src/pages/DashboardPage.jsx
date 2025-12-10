@@ -1,13 +1,25 @@
 import React, { useEffect, useState, useContext } from "react";
-import StatsCard from "../components/StatsCard";
-import Charts from "../components/Charts";
-import { FaGraduationCap } from "react-icons/fa6";
 import { getDailyProgress, getStudent } from "../api/studentApi";
 import { getActivityProgress } from "../api/activityApi";
 
 /* components */
 import LearningStyle from "../components/LearningStyle";
 import { AppContext } from "../contexts/contexts";
+import {
+	Bell,
+	Search,
+	Calendar,
+	ChevronDown,
+	Filter,
+	TrendingUp,
+	Clock,
+	BookOpen,
+} from "lucide-react";
+
+/* Components Import */
+import Charts from "../components/Charts";
+import LearningStyleCard from "../components/LearningStyleCard";
+import ContinueLearning from "../components/ContinueLearning";
 
 const Dashboard = ({ data }) => {
   const { student, setStudent } = useContext(AppContext);

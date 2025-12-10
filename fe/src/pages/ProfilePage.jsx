@@ -1,158 +1,294 @@
-import React, { useEffect, useState } from "react";
-import { getStudent } from "../api/studentApi";
-import dateFormatter from "../utils/dateFormatter";
-import { useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AppContext } from "../contexts/contexts";
+import { getStudent } from "../api/studentApi";
+import { 
+  User, Mail, Camera, Save, Edit3, MapPin, Calendar, 
+  BookOpen, Clock, ShieldCheck, AtSign, Phone
+} from "lucide-react";
 
-export default function ProfilePage({ user }) {
-	const { student } = useContext(AppContext);
-	const [isEditing, setIsEditing] = useState(false);
+export default function ProfilePage() {
+  const { student, setStudent } = useContext(AppContext);
+  const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-	if (!student) {
-		return <p className="p-6 text-gray-600">Loading...</p>;
-	}
+  // State form lokal
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    bio: "Student at LeanSmart Academy 🚀", // Dummy default
+    phone: "+62 812-3456-7890", // Dummy default
+    avatar: null
+  });
 
-	const handleChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
-	};
+  // Sinkronisasi data student ke form saat dimuat
+  useEffect(() => {
+    if (student) {
+      setFormData({
+        name: student.name || "",
+        email: student.email || "",
+        bio: "Learning Enthusiast | Frontend Developer Wannabe", // Placeholder
+        phone: "+62 812-3456-7890",
+        avatar: student.photo_profile || null
+      });
+    }
+  }, [student]);
 
-	const handleAvatarChange = (e) => {
-		const file = e.target.files[0];
-		if (file) {
-			setFormData({ ...formData, avatar: URL.createObjectURL(file) });
-		}
-	};
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-	const handleSave = (e) => {
-		e.preventDefault();
-		console.log("Data disimpan:", formData);
-		setIsEditing(false);
-	};
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({ ...formData, avatar: URL.createObjectURL(file) });
+    }
+  };
 
-	// ===== MODE EDIT =====
-	if (isEditing) {
-		return (
-			<div className="p-8 bg-white rounded-2xl shadow-md">
-				<h1 className="text-3xl font-bold mb-6">Edit Profile</h1>
-				<form className="space-y-4" onSubmit={handleSave}>
-					{/* Avatar */}
-					<div className="flex items-center space-x-4">
-						<div className="w-24 h-24 rounded-full bg-slate-700 flex items-center justify-center text-4xl font-bold overflow-hidden">
-							{formData.avatar ? (
-								<img src={formData.avatar} alt="Avatar" className="w-full h-full object-cover" />
-							) : (
-								student.name.charAt(0)
-							)}
-						</div>
-						<input type="file" accept="image/*" onChange={handleAvatarChange} />
-					</div>
+  const handleSave = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    // Simulasi API Save
+    setTimeout(() => {
+      setStudent({ ...student, name: formData.name, email: formData.email, photo_profile: formData.avatar });
+      setLoading(false);
+      setIsEditing(false);
+    }, 1000);
+  };
 
-					{/* Name */}
-					<div>
-						<label className="block text-gray-700 font-medium">Name</label>
-						<input
-							type="text"
-							name="name"
-							value={formData.name}
-							onChange={handleChange}
-							className="w-full border rounded-xl p-3 mt-1"
-						/>
-					</div>
+  // Helper tanggal
+  const joinDate = student?.joined_since 
+    ? new Date(student.joined_since).toLocaleDateString("id-ID", { month: 'long', year: 'numeric' })
+    : "Januari 2024";
 
-					{/* Email */}
-					<div>
-						<label className="block text-gray-700 font-medium">Email</label>
-						<input
-							type="email"
-							name="email"
-							value={formData.email}
-							onChange={handleChange}
-							className="w-full border rounded-xl p-3 mt-1"
-						/>
-					</div>
+  return (
+    <div className="min-h-screen bg-[#F8FAFC] font-sans selection:bg-indigo-100 selection:text-indigo-900 relative pb-20">
+      
+      {/* --- 1. HEADER BANNER (Abstract Gradient) --- */}
+      <div className="h-64 w-full bg-gradient-to-r from-indigo-600 via-blue-600 to-indigo-800 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white opacity-10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-white opacity-5 rounded-full blur-2xl translate-y-1/4 -translate-x-1/4"></div>
+      </div>
 
-					{/* Buttons */}
-					<div className="flex space-x-3 mt-4">
-						<button type="submit" className="px-6 py-3 bg-blue-600 text-white rounded-xl shadow">
-							Save
-						</button>
-						<button
-							type="button"
-							onClick={() => setIsEditing(false)}
-							className="px-6 py-3 bg-gray-300 rounded-xl"
-						>
-							Cancel
-						</button>
-					</div>
-				</form>
-			</div>
-		);
-	}
+      <div className="max-w-6xl mx-auto px-6 lg:px-12 -mt-24 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          {/* --- 2. LEFT COLUMN (Profile Card) --- */}
+          <div className="lg:col-span-4">
+            <div className="bg-white rounded-[2rem] shadow-xl shadow-slate-200/50 p-8 text-center border border-slate-100 relative overflow-hidden">
+              
+              {/* Avatar */}
+              <div className="relative w-32 h-32 mx-auto mb-4 group">
+                <div className="w-full h-full rounded-full p-1 bg-white shadow-lg">
+                  <div className="w-full h-full rounded-full overflow-hidden bg-slate-100 relative">
+                    {formData.avatar ? (
+                      <img src={formData.avatar} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-indigo-100 text-indigo-600 text-4xl font-bold">
+                        {formData.name.charAt(0)}
+                      </div>
+                    )}
+                    
+                    {/* Overlay Edit Avatar */}
+                    {isEditing && (
+                      <label className="absolute inset-0 bg-black/40 flex items-center justify-center cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Camera className="text-white" size={24} />
+                        <input type="file" accept="image/*" className="hidden" onChange={handleAvatarChange} />
+                      </label>
+                    )}
+                  </div>
+                </div>
+                {/* Online Status */}
+                <div className="absolute bottom-2 right-2 w-5 h-5 bg-emerald-500 border-4 border-white rounded-full"></div>
+              </div>
 
-	return (
-		<div className="p-0">
-			<h1 className="text-3xl font-bold text-gray-900 mb-8">Your Profile</h1>
+              {/* Name & Role */}
+              <h2 className="text-2xl font-bold text-slate-800">{formData.name}</h2>
+              <p className="text-slate-500 text-sm font-medium mb-6">Student • {student.learning_style || "General Learner"}</p>
 
-			{/* PROFILE CARD */}
-			<div className="bg-white rounded-2xl shadow-md border p-8 flex items-center space-x-8">
-				<div className="w-32 h-32 rounded-full bg-slate-700 text-white flex items-center justify-center text-4xl font-bold shadow-lg overflow-hidden">
-					{student.photo_profile ? (
-						<img src={student.photo_profile} alt="Avatar" className="w-full h-full object-cover" />
-					) : (
-						student.name.charAt(0)
-					)}
-				</div>
-				<div>
-					<h2 className="text-2xl font-bold text-gray-900">{student.name}</h2>
-					<p className="text-gray-600 mt-1">Student at LeanSmart Academy</p>
+              {/* Quick Info List */}
+              <div className="space-y-3 text-left bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                <div className="flex items-center gap-3 text-sm text-slate-600">
+                  <Mail size={16} className="text-indigo-500" />
+                  <span className="truncate">{formData.email}</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-slate-600">
+                  <MapPin size={16} className="text-indigo-500" />
+                  <span>Jakarta, Indonesia</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-slate-600">
+                  <Calendar size={16} className="text-indigo-500" />
+                  <span>Joined {joinDate}</span>
+                </div>
+              </div>
 
-					<div className="mt-4 flex items-center space-x-3">
-						<span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-							Bergabung Sejak {student.joined_since && dateFormatter(student.joined_since)}
-						</span>
-					</div>
-				</div>
-			</div>
+              {/* Action Button */}
+              {!isEditing && (
+                <button 
+                  onClick={() => setIsEditing(true)}
+                  className="mt-6 w-full py-3 rounded-xl border border-indigo-100 text-indigo-600 font-bold hover:bg-indigo-50 transition flex items-center justify-center gap-2"
+                >
+                  <Edit3 size={18} /> Edit Profile
+                </button>
+              )}
+            </div>
+          </div>
 
-			{/* LEARNING STYLE & INFORMASI DETAIL (1 CARD) */}
-			<div className="mt-8 grid grid-cols-1 gap-6">
-				<div className="bg-white border shadow-sm p-6 rounded-xl">
-					<h3 className="text-xl font-semibold text-gray-900 mb-3">Learning Style</h3>
-					<p className="text-gray-600 mb-4">Kamu belajar dengan pendekatan:</p>
-					<span className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">
-						{student.learning_style
-							? student.learning_style === "Consistent Learner"
-								? "Consistent Learner"
-								: student.learning_style === "Consistent Learner"
-								? "Fast Learner"
-								: student.learning_style === "Fast Learner"
-								? "Reflective Learner"
-								: student.learning_style === "Reflective Learner"
-								? "Casual Learner"
-								: student.learning_style === "Casual Learner"
-							: "Belum ditentukan"}
-					</span>
+          {/* --- 3. RIGHT COLUMN (Details & Form) --- */}
+          <div className="lg:col-span-8 flex flex-col gap-6">
+            
+            {/* Quick Stats Row */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-4">
+                <div className="p-3 bg-blue-50 text-blue-600 rounded-xl"><BookOpen size={20} /></div>
+                <div>
+                  <p className="text-xs text-slate-400 font-bold uppercase">Courses</p>
+                  <p className="text-xl font-bold text-slate-800">12</p>
+                </div>
+              </div>
+              <div className="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 flex items-center gap-4">
+                <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl"><Clock size={20} /></div>
+                <div>
+                  <p className="text-xs text-slate-400 font-bold uppercase">Hours</p>
+                  <p className="text-xl font-bold text-slate-800">128</p>
+                </div>
+              </div>
+              <div className="hidden md:flex bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 items-center gap-4">
+                <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl"><ShieldCheck size={20} /></div>
+                <div>
+                  <p className="text-xs text-slate-400 font-bold uppercase">Status</p>
+                  <p className="text-xl font-bold text-slate-800">Active</p>
+                </div>
+              </div>
+            </div>
 
-					<hr className="my-6" />
+            {/* Main Content Area */}
+            <div className="bg-white rounded-[2rem] shadow-xl shadow-slate-200/50 p-8 border border-slate-100">
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="text-xl font-bold text-slate-800">Informasi Pribadi</h3>
+                {isEditing && (
+                  <span className="text-xs font-bold bg-amber-100 text-amber-700 px-3 py-1 rounded-full">Editing Mode</span>
+                )}
+              </div>
 
-					<h3 className="text-xl font-semibold text-gray-900 mb-3">Informasi Detail</h3>
-					<ul className="text-gray-700 space-y-2">
-						<li>
-							<strong className="text-gray-900">Email:</strong> {student.email}
-						</li>
-					</ul>
-				</div>
-			</div>
+              <form onSubmit={handleSave} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Full Name */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-600 ml-1">Full Name</label>
+                    <div className="relative">
+                      <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                      <input 
+                        type="text" 
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        disabled={!isEditing}
+                        className={`w-full pl-12 pr-4 py-3.5 rounded-xl border outline-none transition-all ${
+                          isEditing 
+                            ? "bg-white border-indigo-200 focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500" 
+                            : "bg-slate-50 border-slate-100 text-slate-500"
+                        }`}
+                      />
+                    </div>
+                  </div>
 
-			{/* ACTION BUTTON */}
-			<div className="mt-8">
-				<button
-					className="px-6 py-3 bg-slate-700 hover:bg-slate-800 transition rounded-xl text-white font-semibold shadow"
-					onClick={() => setIsEditing(true)}
-				>
-					Edit Profile
-				</button>
-			</div>
-		</div>
-	);
+                  {/* Email */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-600 ml-1">Email Address</label>
+                    <div className="relative">
+                      <AtSign className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                      <input 
+                        type="email" 
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        disabled={!isEditing}
+                        className={`w-full pl-12 pr-4 py-3.5 rounded-xl border outline-none transition-all ${
+                          isEditing 
+                            ? "bg-white border-indigo-200 focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500" 
+                            : "bg-slate-50 border-slate-100 text-slate-500"
+                        }`}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Phone */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-600 ml-1">Phone Number</label>
+                    <div className="relative">
+                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                      <input 
+                        type="text" 
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        disabled={!isEditing}
+                        className={`w-full pl-12 pr-4 py-3.5 rounded-xl border outline-none transition-all ${
+                          isEditing 
+                            ? "bg-white border-indigo-200 focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500" 
+                            : "bg-slate-50 border-slate-100 text-slate-500"
+                        }`}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Learning Style (Read Only) */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-600 ml-1">Learning Style</label>
+                    <div className="w-full px-4 py-3.5 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-700 font-semibold flex items-center justify-between">
+                      <span>{student.learning_style || "Not Set"}</span>
+                      <ShieldCheck size={18} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bio Area */}
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-slate-600 ml-1">Bio</label>
+                  <textarea 
+                    name="bio"
+                    value={formData.bio}
+                    onChange={handleChange}
+                    disabled={!isEditing}
+                    rows="4"
+                    className={`w-full p-4 rounded-xl border outline-none transition-all resize-none ${
+                      isEditing 
+                        ? "bg-white border-indigo-200 focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500" 
+                        : "bg-slate-50 border-slate-100 text-slate-500"
+                    }`}
+                  ></textarea>
+                </div>
+
+                {/* Buttons (Save/Cancel) */}
+                {isEditing && (
+                  <div className="flex gap-4 pt-4 border-t border-slate-100 animate-in fade-in slide-in-from-bottom-2">
+                    <button 
+                      type="button" 
+                      onClick={() => {
+                        setIsEditing(false);
+                        // Reset form ke data asli jika cancel
+                        setFormData({ ...formData, name: student.name, email: student.email });
+                      }}
+                      className="flex-1 py-3.5 rounded-xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 transition"
+                    >
+                      Cancel
+                    </button>
+                    <button 
+                      type="submit" 
+                      disabled={loading}
+                      className="flex-1 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold shadow-lg shadow-indigo-200 transition flex items-center justify-center gap-2"
+                    >
+                      {loading ? "Saving..." : <><Save size={18} /> Save Changes</>}
+                    </button>
+                  </div>
+                )}
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
