@@ -44,13 +44,3 @@ export async function getDailyProgress() {
 		throw error;
 	}
 }
-
-// // Update student
-// export async function updateStudent(studentId, formData) {
-//   const response = await axios.put(`${API_URL}/api/students/1`, formData, {
-//     headers: {
-//       "Content-Type": "multipart/form-data",
-//     },
-//   });
-
-//   return response.data.data;
