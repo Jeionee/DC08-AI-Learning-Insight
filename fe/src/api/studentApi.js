@@ -45,12 +45,16 @@ export async function getDailyProgress() {
 	}
 }
 
-// // Update student
-// export async function updateStudent(studentId, formData) {
-//   const response = await axios.put(`${API_URL}/api/students/1`, formData, {
-//     headers: {
-//       "Content-Type": "multipart/form-data",
-//     },
-//   });
-
-//   return response.data.data;
+export async function getQuizScores() {
+	try {
+		const token = localStorage.getItem("token");
+		const headers = {
+			Authorization: `Bearer ${token}`,
+		};
+		const response = await axios.get(`${API_URL}/students/quiz-results`, { headers });
+		return response.data;
+	} catch {
+		console.error("Gagal mengambil data student:", error);
+		throw error;
+	}
+}
