@@ -38,7 +38,7 @@ export default function ProfilePage() {
 				name: student.name || "",
 				email: student.email || "",
 				bio: "Learning Enthusiast | Frontend Developer Wannabe", // Placeholder
-				phone: "+62 812-3456-7890",
+				phone: "+62 000 000 00",
 				avatar: student.photo_profile || null,
 			});
 		}
@@ -228,23 +228,6 @@ export default function ProfilePage() {
 
 									{/* Learning Style (Read Only) */}
 									<LearningStyle student={student} />
-								</div>
-
-								{/* Bio Area */}
-								<div className="space-y-2">
-									<label className="text-sm font-bold text-slate-600 ml-1">Bio</label>
-									<textarea
-										name="bio"
-										value={formData.bio}
-										onChange={handleChange}
-										disabled={!isEditing}
-										rows="4"
-										className={`w-full p-4 rounded-xl border outline-none transition-all resize-none ${
-											isEditing
-												? "bg-white border-indigo-200 focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500"
-												: "bg-slate-50 border-slate-100 text-slate-500"
-										}`}
-									></textarea>
 								</div>
 
 								{/* Buttons (Save/Cancel) */}
