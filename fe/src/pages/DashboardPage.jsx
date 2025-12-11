@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { getDailyProgress, getStudent } from "../api/studentApi";
+import { getDailyProgress, getStudent, getQuizScores } from "../api/studentApi";
 import { AppContext } from "../contexts/contexts";
 import {
 	Bell,
@@ -19,14 +19,6 @@ import ContinueLearning from "../components/ContinueLearning";
 
 const Dashboard = ({ data }) => {
 	const { student, setStudent } = useContext(AppContext);
-	const [dailyProgress, setDailyProgress] = useState({
-		percentage: 0,
-		student_id: 0,
-		target_hours: 0,
-		time_spent_hours: 0,
-	});
-
-	// --- 1. Fetch Data ---
 	useEffect(() => {
 		async function fetchStudent() {
 			try {
@@ -43,7 +35,28 @@ const Dashboard = ({ data }) => {
 			}
 		}
 		fetchStudent();
-	}, [setStudent]);
+	}, []);
+
+	const [dailyProgress, setDailyProgress] = useState({
+		percentage: 0,
+		student_id: 0,
+		target_hours: 0,
+		time_spent_hours: 0,
+	});
+	const [quizScores, setQuizScores] = useState([]);
+	useEffect(() => {
+		async function fetchQuizScores() {
+			try {
+				const response = await getQuizScores();
+				setQuizScores(response);
+			} catch (error) {
+				console.error("Failed to fetch Quiz Scores", error);
+			}
+		}
+		fetchQuizScores();
+	}, []);
+
+	// --- 1. Fetch Data ---
 
 	useEffect(() => {
 		if (data && data.progress) {
@@ -122,10 +135,7 @@ const Dashboard = ({ data }) => {
 
 							{/* Chart Wrapper */}
 							<div className="min-h-[350px]">
-								<Charts
-									weeklyActivity={data.weeklyActivity}
-									learningDistribution={data.learningDistribution}
-								/>
+								<Charts quizScores={quizScores} />
 							</div>
 						</div>
 					</div>
