@@ -5,18 +5,14 @@ from routes.auth.auth_routes import auth_bp
 from routes.students import students_bp
 from routes.prediction import predict_bp
 from flask_cors import CORS
+from utils.config import Config
 import os
 
 def create_app():
     app = Flask(__name__)
 
-    # Load environment variables from .env file
-    app.config.from_object("utils.config.Config")
+    app.config.from_object(Config)
     
-    # Make sure the JWT_SECRET_KEY and expiration time are set
-    app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "your-secret-key")
-    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=15)  # 15 minutes expiry
-
     # Initialize extensions
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     bcrypt.init_app(app)
