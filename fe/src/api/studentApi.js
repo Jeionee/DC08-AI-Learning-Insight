@@ -72,7 +72,7 @@ export async function getWeeklyActivity() {
       Authorization: `Bearer ${token}`,
     };
 
-    const response = await axios.get(`${API_URL}/students/weekly-activity`, {
+    const response = await axios.get(`${API_URL}/students/weekly-progress`, {
       headers,
     });
 

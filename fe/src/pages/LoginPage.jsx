@@ -43,7 +43,7 @@ export default function Login({ onLogin }) {
 				<div className="w-full md:w-1/2 lg:w-5/12 p-8 md:p-12 flex flex-col justify-center relative">
 					{/* Logo Kecil di Pojok (Optional) */}
 					<div className="absolute top-8 left-8 hidden md:block">
-						<h2 className="text-xl font-extrabold text-indigo-600 tracking-tighter">LeanSmart</h2>
+						<h2 className="text-3xl font-extrabold text-indigo-600 tracking-tighter">LeanSmart</h2>
 					</div>
 
 					<div className="mb-8">
