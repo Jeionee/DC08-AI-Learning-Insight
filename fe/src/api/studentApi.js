@@ -65,6 +65,8 @@ export async function getQuizScores() {
 
 // weekly acivity
 
+// fe/src/api/studentApi.js
+
 export async function getWeeklyActivity() {
   try {
     const token = localStorage.getItem("token");
@@ -72,13 +74,31 @@ export async function getWeeklyActivity() {
       Authorization: `Bearer ${token}`,
     };
 
-    const response = await axios.get(`${API_URL}/students/weekly-activity`, {
+    // PERBAIKAN: Ganti 'weekly-activity' menjadi 'weekly-progress'
+    const response = await axios.get(`${API_URL}/students/weekly-progress`, {
       headers,
     });
 
     return response.data;
   } catch (error) {
     console.log("Gagal mengambil data aktivitas mingguan:", error);
+    throw error;
+  }
+}
+
+export async function getAiRecommendations() {
+  try {
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    // Request ke Backend Flask
+    const response = await axios.get(`${API_URL}/recommendation`, {
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Gagal mengambil rekomendasi AI:", error);
     throw error;
   }
 }
