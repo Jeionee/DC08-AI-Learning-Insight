@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AppContext, AppContextProvider } from "./contexts/contexts";
-import { getStudent } from "./api/studentApi";
 /* layouts */
 import StudentsLayout from "./layouts/StudentsLayout";
 /* pages */
@@ -9,21 +8,12 @@ import Dashboard from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
 import Login from "./pages/LoginPage";
 import ProgressPage from "./pages/ProgressPage";
-import RecommendationPage from "./pages/RecommendationPage";
-import ChallengesPage from "./pages/ChallengesPage";
 import ModulePage from "./pages/ModulPage";
 import ModuleDetail from "./pages/ModuleDetail";
-import AllModules from "./pages/AllModules";
 
 const App = () => {
 	const [learningData, setLearningData] = useState(null);
 	const [isLoggedIn, setIsLoggedIn] = useState(null);
-	const [student, setStudent] = useState({
-		name: "",
-		email: "",
-		learning_style: "",
-		joined_since: "",
-	});
 
 	// cek token dilocalstorage saat refresh
 	useEffect(() => {
@@ -164,10 +154,8 @@ const App = () => {
 						}
 					/>
 					<Route path="module" element={<ModulePage />} />
-					<Route path="/module/:moduleId" element={<ModuleDetail />} />
-					<Route path="/all-modules" element={<AllModules />} />
-					<Route path="recommendation" element={<RecommendationPage />} />
-					<Route path="challenges" element={<ChallengesPage />} />
+					<Route path="module/:moduleId" element={<ModuleDetail />} />
+
 				</Route>
 			</Routes>
 		</AppContextProvider>

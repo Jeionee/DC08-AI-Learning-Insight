@@ -27,8 +27,8 @@ export default function ProfilePage() {
 		name: "",
 		email: "",
 		bio: "Student at LeanSmart Academy 🚀", // Dummy default
-		phone: "+62 812-3456-7890", // Dummy default
-		avatar: null,
+		phone: "+62 000-0000-00000", // Dummy default
+		avatar: "",
 	});
 
 	// Sinkronisasi data student ke form saat dimuat
@@ -74,7 +74,10 @@ export default function ProfilePage() {
 
 	// Helper tanggal
 	const joinDate = student?.joined_since
-		? new Date(student.joined_since).toLocaleDateString("id-ID", { month: "long", year: "numeric" })
+		? new Date(student.joined_since).toLocaleDateString("id-ID", {
+				month: "long",
+				year: "numeric",
+		  })
 		: "Januari 2024";
 
 	return (
@@ -238,7 +241,11 @@ export default function ProfilePage() {
 											onClick={() => {
 												setIsEditing(false);
 												// Reset form ke data asli jika cancel
-												setFormData({ ...formData, name: student.name, email: student.email });
+												setFormData({
+													...formData,
+													name: student.name,
+													email: student.email,
+												});
 											}}
 											className="flex-1 py-3.5 rounded-xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 transition"
 										>

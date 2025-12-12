@@ -62,16 +62,16 @@ export default function Login({ onLogin }) {
 
 					<form onSubmit={handleLogin} className="space-y-5">
 						{/* Email Field */}
-						<div className="space-y-1.5 shadow-md">
+						<div className="space-y-1.5 ">
 							<label className="text-sm font-bold text-slate-700 ml-1">Email Address</label>
-							<div className="relative group">
+							<div className="relative group ">
 								<Mail
 									className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 transition-colors"
 									size={20}
 								/>
 								<input
 									type="email"
-									className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all font-medium text-slate-700 placeholder-slate-400"
+									className="w-full pl-12 pr-4 py-3.5 shadow-md  bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all font-medium text-slate-700 placeholder-slate-400"
 									placeholder="name@example.com"
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
@@ -80,7 +80,7 @@ export default function Login({ onLogin }) {
 						</div>
 
 						{/* Password Field */}
-						<div className="space-y-1.5 shadow-md">
+						<div className="space-y-1.5">
 							<div className="relative group">
 								<Lock
 									className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 transition-colors"
@@ -88,7 +88,7 @@ export default function Login({ onLogin }) {
 								/>
 								<input
 									type={showPassword ? "text" : "password"}
-									className="w-full pl-12 pr-12 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all font-medium text-slate-700 placeholder-slate-400"
+									className="w-full shadow-md  pl-12 pr-12 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-indigo-100 focus:border-indigo-500 outline-none transition-all font-medium text-slate-700 placeholder-slate-400"
 									placeholder="••••••••"
 									value={password}
 									onChange={(e) => setPassword(e.target.value)}
