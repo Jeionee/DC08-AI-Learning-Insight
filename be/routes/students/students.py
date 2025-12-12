@@ -27,7 +27,6 @@ def get_profile():
     except Exception as e:
         return jsonify({"message": f"An error occurred: {str(e)}"}), 500
 
-
 @students_bp.route("/learning-progress", methods=["GET"])
 @jwt_required()
 def get_learning_progress():
@@ -92,7 +91,6 @@ def get_quiz_results():
 
     except Exception as e:
         return jsonify({"message": f"An error occurred: {str(e)}"}), 500
-    
     
 @students_bp.route("/weekly-progress", methods=["GET"])
 @jwt_required()

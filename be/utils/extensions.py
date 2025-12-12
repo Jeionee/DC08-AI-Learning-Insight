@@ -7,4 +7,3 @@ jwt = JWTManager()
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 migrate = Migrate()
-
