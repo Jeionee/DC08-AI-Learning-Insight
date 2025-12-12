@@ -5,9 +5,9 @@ class Registration(db.Model):
 
     id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
     examinees_id = db.Column(db.BigInteger, nullable=False, index=True)
-    tutorial_id = db.Column(db.BigInteger, nullable=False, index=True)
-    registration_date = db.Column(db.DateTime, nullable=True)
-
+    tutorial_id = db.Column(db.BigInteger)
+    registration_date = db.Column(db.DateTime)
+    
     def to_dict(self):
         return {
             "id": self.id,

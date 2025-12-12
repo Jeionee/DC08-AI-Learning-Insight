@@ -46,11 +46,11 @@ def create_app():
     # Create database tables
     with app.app_context():
         db.create_all()
-
+        pass
     return app
     return app
 
 
 if __name__ == "__main__":
     app = create_app()
-    app.run(debug=True)
+    app.run(debug=False)
