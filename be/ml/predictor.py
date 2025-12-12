@@ -1,27 +1,31 @@
 import joblib
+import numpy as np
 import pandas as pd
-import os
+from utils.config import Config
 
-class LearningStyleModel:
-    def __init__(self):
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        model_path = os.path.join(current_dir, "model_learning_style.pkl")
+FEATURE_NAMES = [
+    'max_modules_1day', 'consistency_std', 'active_days', 
+    'total_modules_done', 'unique_modules', 'total_clicks', 
+    'revisit_ratio', 'avg_exam_score', 'exam_attempts', 
+    'avg_project_rating', 'total_submissions'
+]
 
-        try:
-            self.model = joblib.load(model_path)
-            self.feature_names = [
-                "modules_count_today",
-                "avg_minutes_today",
-                "consistency_std"
-            ]
-            print("✅ Learning Style Model Loaded")
-        except Exception as e:
-            print(f"❌ Error loading model: {e}")
-            self.model = None
+try:
+    LEARNING_STYLE_MODEL = joblib.load(Config.MODEL_PATH)
+except FileNotFoundError:
+    LEARNING_STYLE_MODEL = None
 
-    def predict(self, modules, minutes, consistency):
-        if not self.model:
-            return "Model Error"
+def predict_learning_style(features):
+    if LEARNING_STYLE_MODEL is None:
+        return "Model_Not_Loaded"
+        
+    # Mengubah list features menjadi NumPy array 1 baris
+    input_array = np.array(features).reshape(1, -1) 
+    
+    # Mengubah NumPy array menjadi Pandas DataFrame dengan nama kolom
+    input_df = pd.DataFrame(input_array, columns=FEATURE_NAMES)
 
-        df = pd.DataFrame([[modules, minutes, consistency]], columns=self.feature_names)
-        return self.model.predict(df)[0]
+    # Melakukan prediksi menggunakan DataFrame
+    prediction = LEARNING_STYLE_MODEL.predict(input_df)
+    
+    return prediction[0]

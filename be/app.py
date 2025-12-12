@@ -6,17 +6,13 @@ from routes.students import students_bp
 from routes.prediction import predict_bp
 from flask_cors import CORS
 from utils.config import Config
-# from dotenv import load_dotenv 
 import os
-
-# load_dotenv()
 
 def create_app():
     app = Flask(__name__)
 
     app.config.from_object(Config)
     
-
     # Initialize extensions
     CORS(app, resources={r"/api/*": {"origins": "*"}})
     bcrypt.init_app(app)
@@ -45,9 +41,9 @@ def create_app():
     # Create database tables
     with app.app_context():
         db.create_all()
-
+        pass
     return app
 
 if __name__ == "__main__":
     app = create_app()
-    app.run(debug=True)
+    app.run(debug=False)

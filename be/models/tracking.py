@@ -1,10 +1,11 @@
 from utils.extensions import db
-from datetime import datetime
 
 class Tracking(db.Model):
     __tablename__ = "trackings"
 
     id = db.Column(db.Integer, primary_key=True)
+    journey_id  = db.Column(db.Integer, nullable=False)
+    tutorial_id  = db.Column(db.Integer, nullable=False)
     developer_id = db.Column(db.Integer, nullable=False)
     first_opened_at = db.Column(db.DateTime, nullable=False)
     last_viewed = db.Column(db.DateTime, nullable=False)

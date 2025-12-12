@@ -2,30 +2,25 @@ import joblib
 import pandas as pd
 import os
 
+from repositories.student_repository import StudentRepository
+from ml.predictor import predict_learning_style
+from utils.calculate import calculate_features
+
 class PredictionService:
     @staticmethod
-    def predict(data):
-        # Pastikan data yang diterima sudah memiliki field yang benar
-        try:
-            # Menggunakan path relatif untuk menemukan model di folder 'ml'
-            model_path = os.path.join(os.path.dirname(__file__), '..', 'ml', 'model_learning_style.pkl')
-            model = joblib.load(model_path)
-            
-            # Pastikan input data memiliki key yang benar
-            modules_count_today = data.get("modules_count_today")
-            avg_minutes_today = data.get("avg_minutes_today")
-            consistency_std = data.get("consistency_std")
-
-            # Pastikan data ada dan valid
-            if modules_count_today is None or avg_minutes_today is None or consistency_std is None:
-                return None, "Missing required fields in the request"
-
-            # Membuat DataFrame dari input data
-            input_data = pd.DataFrame([[modules_count_today, avg_minutes_today, consistency_std]], columns=["modules_count_today", "avg_minutes_today", "consistency_std"])
-            
-            # Lakukan prediksi
-            prediction = model.predict(input_data)[0]
-
-            return prediction, None
-        except Exception as e:
-            return None, f"Error during prediction: {str(e)}"
+    def predict(student_id):
+        student, trackings, submissions, registrations = StudentRepository.get_student_data(student_id)
+    
+        if not student:
+            return "Student not found"
+    
+        features = calculate_features(trackings, submissions, registrations)
+    
+        predicted_style = predict_learning_style(features)
+    
+        if predicted_style == "Model_Not_Loaded":
+            return predicted_style
+    
+        StudentRepository.update_learning_style(student_id, predicted_style)
+    
+        return predicted_style
