@@ -30,6 +30,13 @@ const Charts = ({ weekly, quizScores = [] }) => {
     return acc;
   }, {});
 
+   // Fungsi untuk menentukan warna berdasarkan nilai
+  const getScoreColor = (score) => {
+    if (score < 60) return "text-yellow-600"; // Kuning
+    if (score >= 60 && score <= 80) return "text-green-600"; // Hijau terang
+    return "text-green-800"; // Hijau gelap (untuk skor 80 ke atas, termasuk 100)
+  };
+
   return (
     <div className="space-y-6 mb-8">
       {/* Ringkasan Aktivitas */}
@@ -91,10 +98,10 @@ const Charts = ({ weekly, quizScores = [] }) => {
                       </span>
                     </div>
                     <div className="text-right">
-                      <span className="font-bold text-gray-900">
+                      <span className={`font-bold  ${getScoreColor(quiz.score)}`}>
                         {quiz.score}
                       </span>
-                      <span className="text-gray-500 text-sm"> / 100</span>
+                      <span className="font-bold text-green-800 text-sm"> / 100</span>
                     </div>
                   </div>
                 ))}

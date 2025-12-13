@@ -67,7 +67,6 @@ const Dashboard = ({ data }) => {
     async function fetchQuizScores() {
       try {
         const response = await getQuizScores();
-        console.log("Quiz Scores:", response); // debug
         setQuizScores(response?.results || []);
       } catch (error) {
         console.error("Failed to fetch Quiz Scores", error);
