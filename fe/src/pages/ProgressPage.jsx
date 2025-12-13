@@ -64,25 +64,13 @@ export default function ProgressPage({ progress, modules }) {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] font-sans selection:bg-indigo-100 selection:text-indigo-900 overflow-x-hidden relative">
-      {/* --- HEADER FIXED --- */}
-      <div className="w-full fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md border-b border-slate-200 z-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-slate-800">Progress Belajar</h1>
-          <button
-            onClick={() => navigate("/dashboard")}
-            className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-sm font-semibold shadow hover:bg-indigo-700 transition"
-          >
-            Kembali ke Dashboard
-          </button>
-        </div>
-      </div>
 
       {/* --- BACKGROUND DECORATION --- */}
       <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-indigo-100/40 rounded-full blur-3xl -z-10 -translate-x-1/4 -translate-y-1/4"></div>
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-blue-100/30 rounded-full blur-3xl -z-10 translate-x-1/4 translate-y-1/4"></div>
 
       {/* --- CONTAINER UTAMA --- */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-20"> {/* Padding-top adjusted here */}
         {/* --- HEADER SECTION --- */}
         <div className="mb-12 relative">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">

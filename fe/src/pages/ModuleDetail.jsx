@@ -188,7 +188,7 @@ export default function ModuleDetail() {
                 <div
                   key={lesson.id}
                   onClick={() => !isLocked && setActiveLessonId(lesson.id)}
-                  className={`group flex items-center gap-3 p-3 rounded-2xl cursor-pointer transition-all duration-200 border ${
+                  className={`group flex items-center gap-3 p-4 rounded-2xl cursor-pointer transition-all duration-200 border ${
                     isActive
                       ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200 border-indigo-600"
                       : isLocked
@@ -244,7 +244,7 @@ export default function ModuleDetail() {
         {/* === RIGHT CONTENT === */}
         <main className="flex-1 flex flex-col h-screen overflow-y-auto bg-[#F8FAFC]">
           {/* Content Header */}
-          <header className="h-20 border-b border-slate-200 flex items-center justify-between px-8 bg-white/80 backdrop-blur-md sticky top-0 z-10">
+          <header className="h-20 border-b border-slate-200 flex items-center justify-between p-4 px-6 bg-white/80 backdrop-blur-md sticky top-0 z-10">
             <h3 className="font-bold text-slate-800 truncate mr-4 text-lg">
               {activeLesson.title}
             </h3>

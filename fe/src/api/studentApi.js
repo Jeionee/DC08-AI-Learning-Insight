@@ -1,29 +1,33 @@
 import axios from "axios";
+
+// Base API URL
 const API_URL = "http://127.0.0.1:5000/api";
+
+// Helper function to get headers with authorization
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("token");
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+};
 
 export async function getStudent() {
   try {
-    const token = localStorage.getItem("token");
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
     const response = await axios.get(`${API_URL}/students/profile`, {
-      headers,
+      headers: getAuthHeaders(),
     });
     return response.data;
   } catch (error) {
     console.error("Gagal mengambil data student:", error);
-    throw error;
+    throw error; // rethrow error to handle it further upstream
   }
 }
 
 export async function predictStudent() {
   try {
-    const token = localStorage.getItem("token");
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    const response = await axios.get(`${API_URL}/predict`, { headers });
+    const response = await axios.get(`${API_URL}/predict`, {
+      headers: getAuthHeaders(),
+    });
     return response.data;
   } catch (error) {
     console.error("Gagal mengambil data student:", error);
@@ -33,52 +37,36 @@ export async function predictStudent() {
 
 export async function getDailyProgress() {
   try {
-    const token = localStorage.getItem("token");
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    const response = await axios.get(`${API_URL}/students/learning-progress`, {
-      headers,
+    const response = await axios.get(`${API_URL}/students/daily-progress`, {
+      headers: getAuthHeaders(),
     });
     return response.data;
   } catch (error) {
-    console.error("Gagal mengambil data student:", error);
+    console.error("Gagal mengambil data daily progress:", error);
     throw error;
   }
 }
 
 export async function getQuizScores() {
   try {
-    const token = localStorage.getItem("token");
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
     const response = await axios.get(`${API_URL}/students/quiz-results`, {
-      headers,
+      headers: getAuthHeaders(),
     });
     return response.data;
-  } catch {
-    console.error("Gagal mengambil data student:", error);
+  } catch (error) {
+    console.error("Gagal mengambil data quiz:", error);
     throw error;
   }
 }
 
-// weekly acivity
-
 export async function getWeeklyActivity() {
   try {
-    const token = localStorage.getItem("token");
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
     const response = await axios.get(`${API_URL}/students/weekly-progress`, {
-      headers,
+      headers: getAuthHeaders(),
     });
-
     return response.data;
   } catch (error) {
-    console.log("Gagal mengambil data aktivitas mingguan:", error);
+    console.error("Gagal mengambil data aktivitas mingguan:", error);
     throw error;
   }
 }
