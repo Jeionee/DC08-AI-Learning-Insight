@@ -255,15 +255,20 @@ export default function ProfilePage() {
                           {/* Teks Email */}
                         </div>
                       ) : (
-                        // Input email saat editing (dengan ikon di dalam input)
-                        <input
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          disabled
-                          className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50 border-slate-300 text-slate-500 cursor-not-allowed border-2"
-                        />
+                        <div>
+                          <Mail
+                            className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                            size={18}
+                          />
+                          <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            disabled
+                            className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50 border-slate-300 text-slate-500 cursor-not-allowed border-2"
+                          />
+                        </div>
                       )}
                     </div>
                   </div>
