@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 
-const Charts = ({ weekly }) => {
+const Charts = ({ weekly, quizScores = [] }) => {
   if (!weekly) return <p>Loading...</p>;
 
   const {
@@ -22,6 +22,14 @@ const Charts = ({ weekly }) => {
   } = weekly;
 
   const isIncrease = week_change >= 0;
+
+  // Kelompokkan quiz berdasarkan journey_title
+  const groupedByJourney = quizScores.reduce((acc, quiz) => {
+    if (!acc[quiz.journey_title]) acc[quiz.journey_title] = [];
+    acc[quiz.journey_title].push(quiz);
+    return acc;
+  }, {});
+
   return (
     <div className="space-y-6 mb-8">
       {/* Ringkasan Aktivitas */}
@@ -59,7 +67,41 @@ const Charts = ({ weekly }) => {
         <p className="text-sm text-gray-500 mb-4">
           Hasil nilai tiap kuis yang telah kamu kerjakan
         </p>
-        <div className="space-y-3"> </div>
+
+        {quizScores.length === 0 ? (
+          <p className="text-gray-400 text-sm">Belum ada nilai kuis.</p>
+        ) : (
+          Object.entries(groupedByJourney).map(([journey, quizzes]) => (
+            <div key={journey} className="mb-4">
+              {/* Nama Journey */}
+              <h4 className="font-semibold text-gray-800 text-lg mb-2">
+                {journey}
+              </h4>
+
+              {/* Submodul */}
+              <div className="space-y-2">
+                {quizzes.map((quiz) => (
+                  <div
+                    key={quiz.result_id}
+                    className="bg-white rounded-xl p-3 flex justify-between items-center shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
+                  >
+                    <div>
+                      <span className="font-medium text-gray-800">
+                        {quiz.tutorial_title}
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-bold text-gray-900">
+                        {quiz.score}
+                      </span>
+                      <span className="text-gray-500 text-sm"> / 100</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
